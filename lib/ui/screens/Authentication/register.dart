@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/core/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
-class Login extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleScreen;
 
-  Login(this.toggleScreen);
-
+  const Register({Key? key, required this.toggleScreen}) : super(key: key);
   @override
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Register> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   final _formKey = GlobalKey<FormState>();
@@ -51,7 +50,7 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 60),
                 Text(
-                  "Welcome Back",
+                  "Welcome",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -59,7 +58,7 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Sign in to continue",
+                  "Create an account to continue",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
@@ -108,7 +107,7 @@ class _LoginState extends State<Login> {
                     if (_formKey.currentState!.validate()) {
                       print("Email : ${_emailController.text}");
                       print("Password : ${_passwordController.text}");
-                      await loginProvider.login(_emailController.text.trim(),
+                      await loginProvider.register(_emailController.text.trim(),
                           _passwordController.text.trim());
                     }
                   },
@@ -125,7 +124,7 @@ class _LoginState extends State<Login> {
                               new AlwaysStoppedAnimation<Color>(Colors.white),
                         )
                       : Text(
-                          "Login",
+                          "Register",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -136,14 +135,28 @@ class _LoginState extends State<Login> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account ?"),
+                    Text("Alread have an account ?"),
                     SizedBox(width: 5),
                     TextButton(
                       onPressed: () => widget.toggleScreen(),
-                      child: Text('Register'),
+                      child: Text('Login'),
                     ),
                   ],
-                )
+                ),
+                SizedBox(height: 30),
+                /*if (loginProvider.errorMessage != null)
+                  Container(
+                    padding: EdgeInsets.symetric(horizontal: 10, vertical: 5),
+                    color: Colors.amberAccent,
+                    child: ListTile(
+                      title: Text(loginProvider.errorMessage),
+                      leading: Icon(Icons.error),
+                      trailing: IconButton(
+                        onPressed: () => loginProvider.setMessage(null),
+                        icon: Icon(Icons.close),
+                      ),
+                    ),
+                  ),*/
               ],
             ),
           ),

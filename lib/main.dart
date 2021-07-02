@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'ui/screens/Authentication/login.dart';
+import 'package:pets_app/core/services/authentication_service.dart';
+import 'package:pets_app/ui/screens/wrapper.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,12 +17,19 @@ class MyApp extends StatelessWidget {
           if (snapshot.hasError) {
             return ErrorWidget();
           } else if (snapshot.hasData) {
-            return MaterialApp(
-              theme: ThemeData(
-                primarySwatch: Colors.green,
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider<AuthService>.value(value: AuthService()),
+                StreamProvider<User?>.value(
+                    value: AuthService().user, initialData: null),
+              ],
+              child: MaterialApp(
+                theme: ThemeData(
+                  primarySwatch: Colors.green,
+                ),
+                debugShowCheckedModeBanner: false,
+                home: Wrapper(),
               ),
-              debugShowCheckedModeBanner: false,
-              home: Login(),
             );
           } else {
             return Loading();
