@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pets_app/core/models/user.dart';
 
 class AuthService with ChangeNotifier {
   bool _isLoading = false;
@@ -9,13 +12,27 @@ class AuthService with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final gooleSignIn = GoogleSignIn();
+  DatabaseReference usersRef =
+      FirebaseDatabase.instance.reference().child("users");
 
-  Future register(String email, String password) async {
+  Future register(
+      String name, String email, String phoneNumber, String password) async {
     setLoading(true);
     try {
       UserCredential authResult = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
       User? user = authResult.user;
+      if (user != null) {
+        Map userDataMap = {
+          "name": name,
+          "phoneNumber": phoneNumber,
+          "email": email,
+          "password": password,
+        };
+        //save user info in the database
+        usersRef.child(user.uid).set(userDataMap);
+      }
       setLoading(false);
       return user;
     } on SocketException {

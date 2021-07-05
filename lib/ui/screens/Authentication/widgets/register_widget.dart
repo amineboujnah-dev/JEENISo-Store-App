@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/services/authentication_service.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
 import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
@@ -13,14 +14,20 @@ class Register extends StatefulWidget {
 }
 
 class _LoginState extends State<Register> {
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  late TextEditingController _addressController;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _phoneController = TextEditingController();
+
     super.initState();
   }
 
@@ -28,12 +35,16 @@ class _LoginState extends State<Register> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _nameController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<AuthService>(context);
+    final p = new SizeConfig();
+    p.init(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -42,16 +53,9 @@ class _LoginState extends State<Register> {
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  SizedBox(height: 60),
+                  SizedBox(height: p.getProportionateScreenHeight(60)),
                   Text(
                     welcomeLabel.substring(0, 7),
                     style: TextStyle(
@@ -59,7 +63,7 @@ class _LoginState extends State<Register> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: p.getProportionateScreenHeight(10)),
                   Text(
                     registerMsg,
                     style: TextStyle(
@@ -67,7 +71,24 @@ class _LoginState extends State<Register> {
                       color: Colors.grey,
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
+                  TextFormField(
+                    controller: _nameController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return nullNameMsg;
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Name",
+                      prefixIcon: Icon(Icons.person),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
                   TextFormField(
                     controller: _emailController,
                     validator: (value) {
@@ -86,7 +107,24 @@ class _LoginState extends State<Register> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
+                  TextFormField(
+                    controller: _phoneController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return nullPhoneMsg;
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      hintText: PhoneHint,
+                      prefixIcon: Icon(Icons.phone),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
                   TextFormField(
                     controller: _passwordController,
                     validator: (value) {
@@ -113,7 +151,9 @@ class _LoginState extends State<Register> {
                         print("Email : ${_emailController.text}");
                         print("Password : ${_passwordController.text}");
                         await loginProvider.register(
+                            _nameController.text.trim(),
                             _emailController.text.trim(),
+                            _phoneController.text.trim(),
                             _passwordController.text.trim());
                       }
                     },
@@ -125,9 +165,12 @@ class _LoginState extends State<Register> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: loginProvider.isLoading
-                        ? CircularProgressIndicator(
-                            valueColor:
-                                new AlwaysStoppedAnimation<Color>(Colors.white),
+                        ? Center(
+                            widthFactor: 3,
+                            child: CircularProgressIndicator(
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  Colors.white),
+                            ),
                           )
                         : Text(
                             registerLabel,
@@ -137,7 +180,7 @@ class _LoginState extends State<Register> {
                             ),
                           ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: p.getProportionateScreenHeight(20)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
