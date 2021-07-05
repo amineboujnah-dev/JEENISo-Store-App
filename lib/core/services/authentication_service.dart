@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
@@ -24,14 +25,21 @@ class AuthService with ChangeNotifier {
           .createUserWithEmailAndPassword(email: email, password: password);
       User? user = authResult.user;
       if (user != null) {
-        Map userDataMap = {
+        /*Map userDataMap = {
           "name": name,
           "phoneNumber": phoneNumber,
           "email": email,
           "password": password,
-        };
+        };*/
+        FirebaseFirestore.instance.collection("users").add({
+          "id": user.uid,
+          "name": name,
+          "phoneNumber": phoneNumber,
+          "email": email,
+          "password": password,
+        });
         //save user info in the database
-        usersRef.child(user.uid).set(userDataMap);
+        //usersRef.child(user.uid).set(userDataMap);
       }
       setLoading(false);
       return user;
