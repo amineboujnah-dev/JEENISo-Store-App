@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pets_app/ui/screens/Authentication/authentication.dart';
-import 'package:pets_app/ui/screens/home/home_screen.dart';
+import 'package:pets_app/ui/screens/Authentication/view/authentication.dart';
+import 'package:pets_app/ui/screens/home/widget/home_widget.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {

@@ -1,0 +1,12 @@
+const String welcomeLabel = "Welcome Back";
+const String signInLabel = "Sign in to continue";
+const String registerMsg = "Create an account to continue";
+const String nullEmailMsg = "Please enter a valid email address";
+const String emailHint = "Email";
+const String nullPasswordMsg = "Please enter a password";
+const String lengthPasswordMsg = "Please enter more than 6 characters";
+const String pwdHint = "Password";
+const String loginLabel = "Login";
+const String missingAccLabel = "Don't have an account ?";
+const String existingAcc = "Already have an account ?";
+const String registerLabel = "Register";
