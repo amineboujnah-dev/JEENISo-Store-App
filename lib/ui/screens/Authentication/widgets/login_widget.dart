@@ -153,7 +153,7 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      "Sign in with Google",
+                      signInWithGoogle,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

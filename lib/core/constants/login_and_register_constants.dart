@@ -10,6 +10,7 @@ const String nullPasswordMsg = "Please enter a password";
 const String lengthPasswordMsg = "Please enter more than 6 characters";
 const String pwdHint = "Password";
 const String loginLabel = "Login";
+const String signInWithGoogle = "Sign in with Google";
 const String missingAccLabel = "Don't have an account ?";
 const String existingAcc = "Already have an account ?";
 const String registerLabel = "Register";
