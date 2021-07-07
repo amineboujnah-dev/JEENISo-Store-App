@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pets_app/ui/screens/Authentication/login.dart';
-import 'package:pets_app/ui/screens/Authentication/register.dart';
+import 'package:pets_app/ui/screens/Authentication/widgets/login_widget.dart';
+import 'package:pets_app/ui/screens/Authentication/widgets/register_widget.dart';
 
 class Authentication extends StatefulWidget {
   @override
