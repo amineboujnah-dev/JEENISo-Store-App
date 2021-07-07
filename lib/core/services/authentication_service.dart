@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pets_app/core/models/user.dart';
 
 class AuthService with ChangeNotifier {
   bool _isLoading = false;
@@ -31,7 +30,7 @@ class AuthService with ChangeNotifier {
           "email": email,
           "password": password,
         };*/
-        FirebaseFirestore.instance.collection("users").add({
+        FirebaseFirestore.instance.collection("users").doc(user.uid).set({
           "id": user.uid,
           "name": name,
           "phoneNumber": phoneNumber,
@@ -85,6 +84,16 @@ class AuthService with ChangeNotifier {
   void setMessage(message) {
     _errorMessage = message;
     notifyListeners();
+  }
+
+  // GET UID
+  String getCurrentUID() {
+    return firebaseAuth.currentUser!.uid;
+  }
+
+  // GET CURRENT USER
+  Future getCurrentUser() async {
+    return firebaseAuth.currentUser;
   }
 
   Stream<User?> get user =>

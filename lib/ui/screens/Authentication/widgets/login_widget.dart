@@ -39,6 +39,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<AuthService>(context);
+
     final loginwithGoogleProvider = Provider.of<GoogleSignProvider>(context);
     final p = new SizeConfig();
     p.init(context);
