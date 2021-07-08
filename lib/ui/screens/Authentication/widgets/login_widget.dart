@@ -19,8 +19,8 @@ class _LoginState extends State<Login> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   final _formKey = GlobalKey<FormState>();
-
   late SizeConfig p;
+  bool _isObscure = true;
 
   @override
   void initState() {
@@ -70,8 +70,11 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(30)),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
                   TextFormField(
                     controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null ||
                           value.isEmpty ||
@@ -80,6 +83,7 @@ class _LoginState extends State<Login> {
                       }
                       return null;
                     },
+                    onChanged: (value) {},
                     decoration: InputDecoration(
                       hintText: emailHint,
                       prefixIcon: Icon(Icons.mail),
@@ -99,13 +103,22 @@ class _LoginState extends State<Login> {
                       }
                       return null;
                     },
-                    obscureText: true,
+                    obscureText: _isObscure,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.vpn_key),
                       hintText: pwdHint,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          }),
                     ),
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(30)),

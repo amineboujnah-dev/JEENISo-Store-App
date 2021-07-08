@@ -1,4 +1,8 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pets_app/core/constants/login_and_register_constants.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -6,9 +10,37 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  final currentUser = FirebaseAuth.instance.currentUser;
   bool showPassword = false;
+  late TextEditingController _nameController;
+  late TextEditingController _phoneController;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+  late TextEditingController _addressController;
+
+  @override
+  void initState() {
+    _nameController = TextEditingController();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _phoneController = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final p = new SizeConfig();
+    p.init(context);
     return Scaffold(
       /*appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -97,10 +129,82 @@ class _EditProfilePageState extends State<EditProfilePage> {
               SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", "Dor Alex", false),
+              /*buildTextField("Full Name", "Dor Alex", false),
               buildTextField("E-mail", "alexd@gmail.com", false),
               buildTextField("Password", "********", true),
-              buildTextField("Address", "Tunisia, Sousse", false),
+              buildTextField("Address", "Tunisia, Sousse", false),*/
+              TextFormField(
+                controller: _nameController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return nullNameMsg;
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  hintText: "Name",
+                  prefixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: p.getProportionateScreenHeight(30)),
+              TextFormField(
+                controller: _emailController,
+                validator: (value) {
+                  if (value == null ||
+                      value.isEmpty ||
+                      !EmailValidator.validate(value)) {
+                    return nullEmailMsg;
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  hintText: emailHint,
+                  prefixIcon: Icon(Icons.mail),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: p.getProportionateScreenHeight(30)),
+              TextFormField(
+                controller: _phoneController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return nullPhoneMsg;
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  hintText: PhoneHint,
+                  prefixIcon: Icon(Icons.phone),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: p.getProportionateScreenHeight(30)),
+              TextFormField(
+                controller: _passwordController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return nullPasswordMsg;
+                  } else if (value.length < 6) {
+                    return lengthPasswordMsg;
+                  }
+                  return null;
+                },
+                obscureText: true,
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.vpn_key),
+                  hintText: pwdHint,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 35,
               ),

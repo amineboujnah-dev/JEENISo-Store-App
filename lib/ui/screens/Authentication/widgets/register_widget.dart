@@ -15,15 +15,18 @@ class Register extends StatefulWidget {
 
 class _LoginState extends State<Register> {
   late TextEditingController _nameController;
+  late TextEditingController _confirmPasswordController;
   late TextEditingController _phoneController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late TextEditingController _addressController;
   final _formKey = GlobalKey<FormState>();
+  bool _isObscure = true;
 
   @override
   void initState() {
     _nameController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _phoneController = TextEditingController();
@@ -37,6 +40,7 @@ class _LoginState extends State<Register> {
     _passwordController.dispose();
     _nameController.dispose();
     _phoneController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -72,7 +76,7 @@ class _LoginState extends State<Register> {
                     ),
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(30)),
-                  TextFormField(
+                  /*TextFormField(
                     controller: _nameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -87,10 +91,12 @@ class _LoginState extends State<Register> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  ),
+                  ),*/
                   SizedBox(height: p.getProportionateScreenHeight(30)),
                   TextFormField(
                     controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null ||
                           value.isEmpty ||
@@ -107,8 +113,8 @@ class _LoginState extends State<Register> {
                       ),
                     ),
                   ),
-                  SizedBox(height: p.getProportionateScreenHeight(30)),
-                  TextFormField(
+                  //SizedBox(height: p.getProportionateScreenHeight(30)),
+                  /*TextFormField(
                     controller: _phoneController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -123,10 +129,11 @@ class _LoginState extends State<Register> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  ),
+                  ),*/
                   SizedBox(height: p.getProportionateScreenHeight(30)),
                   TextFormField(
                     controller: _passwordController,
+                    textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return nullPasswordMsg;
@@ -135,16 +142,52 @@ class _LoginState extends State<Register> {
                       }
                       return null;
                     },
-                    obscureText: true,
+                    obscureText: _isObscure,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.vpn_key),
                       hintText: pwdHint,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          }),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    validator: (value) {
+                      if (value != _passwordController.text.trim()) {
+                        return differentPasswordMsg;
+                      }
+                      return null;
+                    },
+                    obscureText: _isObscure,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.vpn_key),
+                      hintText: confirmPasswordHint,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          }),
+                    ),
+                  ),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
                   MaterialButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pets_app/core/constants/images_paths_constants.dart';
 import 'package:pets_app/ui/screens/home/view/home_view.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
 
@@ -32,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             // logo here
             Image.asset(
-              logoPath,
+              "assets/images/adopt_me_logo.png",
               height: p.getProportionateScreenHeight(300),
             ),
             SizedBox(
