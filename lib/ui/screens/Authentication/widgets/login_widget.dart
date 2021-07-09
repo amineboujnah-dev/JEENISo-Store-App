@@ -2,8 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
-import 'package:pets_app/core/services/authentication_service.dart';
+import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
+import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
@@ -56,18 +57,12 @@ class _LoginState extends State<Login> {
                   SizedBox(height: p.getProportionateScreenHeight(60)),
                   Text(
                     welcomeLabel,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: welcomeLabelStyle,
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(10)),
                   Text(
                     signInLabel,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                    style: authMsgslStyle,
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(30)),
                   SizedBox(height: p.getProportionateScreenHeight(30)),
@@ -75,6 +70,7 @@ class _LoginState extends State<Login> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null ||
                           value.isEmpty ||
@@ -83,7 +79,6 @@ class _LoginState extends State<Login> {
                       }
                       return null;
                     },
-                    onChanged: (value) {},
                     decoration: InputDecoration(
                       hintText: emailHint,
                       prefixIcon: Icon(Icons.mail),
@@ -95,6 +90,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height: p.getProportionateScreenHeight(30)),
                   TextFormField(
                     controller: _passwordController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return nullPasswordMsg;
@@ -154,8 +150,8 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                   ),
-                  SizedBox(height: 30),
-                  MaterialButton(
+                  //SizedBox(height: 30),
+                  /*MaterialButton(
                     onPressed: () {
                       loginwithGoogleProvider.googleLogin();
                     },
@@ -173,19 +169,57 @@ class _LoginState extends State<Login> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                  ),*/
+                  SizedBox(height: p.getProportionateScreenHeight(20)),
+                  Text(
+                    '- OR -',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SizedBox(height: p.getProportionateScreenHeight(10)),
+                  Text(
+                    'Sign in with',
+                    style: authMsgslStyle,
+                  ),
+                  SizedBox(height: p.getProportionateScreenHeight(20)),
+                  GestureDetector(
+                    onTap: () {
+                      loginwithGoogleProvider.googleLogin();
+                    },
+                    child: Container(
+                      height: 60.0,
+                      width: 60.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).primaryColor,
+                            offset: Offset(0, 2),
+                            blurRadius: 6.0,
+                          ),
+                        ],
+                        image: DecorationImage(
+                          image: AssetImage(
+                            'assets/images/google.jpg',
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(20)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(missingAccLabel),
-                      SizedBox(width: 5),
+                      SizedBox(width: p.getProportionateScreenWidth(5)),
                       TextButton(
                         onPressed: () => widget.toggleScreen(),
                         child: Text(registerLabel),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

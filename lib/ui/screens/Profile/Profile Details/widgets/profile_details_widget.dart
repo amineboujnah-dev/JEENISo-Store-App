@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
-import 'package:pets_app/core/services/authentication_service.dart';
+import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/screens/Profile/Edit%20Profile/view/edit_profile_view.dart';
 import 'package:provider/provider.dart';
 

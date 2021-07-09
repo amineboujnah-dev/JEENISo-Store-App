@@ -1,8 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
-import 'package:pets_app/core/services/authentication_service.dart';
+import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
+import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
@@ -62,18 +63,12 @@ class _LoginState extends State<Register> {
                   SizedBox(height: p.getProportionateScreenHeight(60)),
                   Text(
                     welcomeLabel.substring(0, 7),
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: welcomeLabelStyle,
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(10)),
                   Text(
                     registerMsg,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                    style: authMsgslStyle,
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(30)),
                   /*TextFormField(
@@ -97,6 +92,7 @@ class _LoginState extends State<Register> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null ||
                           value.isEmpty ||
@@ -134,6 +130,7 @@ class _LoginState extends State<Register> {
                   TextFormField(
                     controller: _passwordController,
                     textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return nullPasswordMsg;

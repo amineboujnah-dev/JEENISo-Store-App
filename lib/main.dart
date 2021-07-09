@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
-import 'package:pets_app/core/services/authentication_service.dart';
+import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/screens/SplashScreen/view/splash_screen_view.dart';
 import 'package:provider/provider.dart';
 
