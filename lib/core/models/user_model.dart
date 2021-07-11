@@ -1,21 +1,22 @@
 class UserModel {
   late String uid;
-  late String name;
-  late String email;
-  late String phoneNumber;
-  late String address;
-  late String password;
-  late String imagePath;
 
-  UserModel(this.uid, this.name, this.email, this.phoneNumber, this.address,
-      this.password, this.imagePath);
+  UserModel(this.uid);
+}
+
+class UserData {
+  final String uid;
+  final String name;
+  final String phoneNumber;
+  final String address;
+  final String imageUrl;
+
+  UserData(this.uid, this.name, this.phoneNumber, this.address, this.imageUrl);
 
   Map<String, dynamic> toJson() => {
-        'id': uid,
         'name': name,
-        'email': email,
         'phoneNumber': phoneNumber,
-        'password': password,
-        'imagePath': imagePath
+        'address': address,
+        'imagePath': imageUrl
       };
 }

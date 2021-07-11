@@ -6,6 +6,7 @@ const String nullNameMsg = "Please enter a name";
 const String nullPhoneMsg = "Please enter a phone number";
 const String emailHint = "Email";
 const String PhoneHint = "Phone Number";
+const String addressHint = "Address";
 const String nullPasswordMsg = "Please enter a password";
 const String lengthPasswordMsg = "Please enter more than 6 characters";
 const String differentPasswordMsg = "Passwords do not match";

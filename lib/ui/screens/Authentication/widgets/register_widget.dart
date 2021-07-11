@@ -2,36 +2,30 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
+import 'package:pets_app/ui/screens/Authentication/widgets/login_widget.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
 import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
-  final Function toggleScreen;
-
-  const Register({Key? key, required this.toggleScreen}) : super(key: key);
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Register> {
-  late TextEditingController _nameController;
   late TextEditingController _confirmPasswordController;
-  late TextEditingController _phoneController;
+
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
-  late TextEditingController _addressController;
+
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
 
   @override
   void initState() {
-    _nameController = TextEditingController();
     _confirmPasswordController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _phoneController = TextEditingController();
-
     super.initState();
   }
 
@@ -39,8 +33,7 @@ class _LoginState extends State<Register> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _nameController.dispose();
-    _phoneController.dispose();
+
     _confirmPasswordController.dispose();
     super.dispose();
   }
@@ -191,9 +184,7 @@ class _LoginState extends State<Register> {
                         print("Email : ${_emailController.text}");
                         print("Password : ${_passwordController.text}");
                         await loginProvider.register(
-                            _nameController.text.trim(),
                             _emailController.text.trim(),
-                            _phoneController.text.trim(),
                             _passwordController.text.trim());
                       }
                     },
@@ -227,7 +218,12 @@ class _LoginState extends State<Register> {
                       Text(existingAcc),
                       SizedBox(width: 5),
                       TextButton(
-                        onPressed: () => widget.toggleScreen(),
+                        onPressed: () {
+                          setState(() {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (_) => Login()));
+                          });
+                        },
                         child: Text(loginLabel),
                       ),
                     ],

@@ -1,17 +1,15 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
+import 'package:pets_app/ui/screens/Authentication/widgets/register_widget.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
 import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
-  final Function toggleScreen;
-
-  Login(this.toggleScreen);
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -40,6 +38,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<AuthService>(context);
+    final Future<FirebaseApp> _init = Firebase.initializeApp();
 
     final loginwithGoogleProvider = Provider.of<GoogleSignProvider>(context);
     final p = new SizeConfig();
@@ -215,7 +214,13 @@ class _LoginState extends State<Login> {
                       Text(missingAccLabel),
                       SizedBox(width: p.getProportionateScreenWidth(5)),
                       TextButton(
-                        onPressed: () => widget.toggleScreen(),
+                        onPressed: () {
+                          setState(() {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Register()));
+                          });
+                        },
                         child: Text(registerLabel),
                       ),
                     ],

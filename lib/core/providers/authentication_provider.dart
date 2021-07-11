@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/widgets.dart';
+import 'package:pets_app/core/models/user_model.dart';
 
 class AuthService with ChangeNotifier {
   bool _isLoading = false;
@@ -11,20 +13,35 @@ class AuthService with ChangeNotifier {
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  Future register(
-      String name, String email, String phoneNumber, String password) async {
+  // create user obj based on firebase user
+  UserModel? _userFromFirebaseUser(User? user) {
+    return user != null ? UserModel(user.uid) : null;
+  }
+
+  Stream<UserModel?> get user {
+    return firebaseAuth
+        .authStateChanges()
+        .map((User? user) => _userFromFirebaseUser(user));
+    //.map(_userFromFirebaseUser);
+  }
+
+  Future register(String email, String password) async {
     setLoading(true);
     try {
       UserCredential authResult = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
       User? user = authResult.user;
+
       if (user != null) {
         FirebaseFirestore.instance.collection("users").doc(user.uid).set({
           "id": user.uid,
-          "name": name,
-          "phoneNumber": phoneNumber,
           "email": email,
           "password": password,
+          'name': "",
+          'phoneNumber': "",
+          'address': "",
+          'imageUrl':
+              "https://firebasestorage.googleapis.com/v0/b/test-login-df937.appspot.com/o/adopt_me_logo.png?alt=media&token=14ec5a26-fbbb-42fe-8828-a276295f5101"
         });
       }
       setLoading(false);
@@ -82,7 +99,4 @@ class AuthService with ChangeNotifier {
   Future getCurrentUser() async {
     return firebaseAuth.currentUser;
   }
-
-  Stream<User?> get user =>
-      firebaseAuth.authStateChanges().map((event) => event);
 }
