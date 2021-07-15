@@ -40,7 +40,7 @@ class _LoginState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    final loginProvider = Provider.of<AuthService>(context);
+    final loginProvider = Provider.of<AuthProvider>(context);
     final p = new SizeConfig();
     p.init(context);
     return Scaffold(
@@ -53,6 +53,24 @@ class _LoginState extends State<Register> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  if (loginProvider.errorMessage != "")
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      color: Colors.amberAccent,
+                      child: ListTile(
+                        title: Text(loginProvider.errorMessage),
+                        leading: Icon(Icons.error),
+                        trailing: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              loginProvider.setMessage("");
+                            });
+                          },
+                          icon: Icon(Icons.close),
+                        ),
+                      ),
+                    ),
                   SizedBox(height: p.getProportionateScreenHeight(60)),
                   Text(
                     welcomeLabel.substring(0, 7),
@@ -228,20 +246,6 @@ class _LoginState extends State<Register> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
-                  /*if (loginProvider.errorMessage != null)
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      color: Colors.amberAccent,
-                      child: ListTile(
-                        title: Text(loginProvider.errorMessage),
-                        leading: Icon(Icons.error),
-                        trailing: IconButton(
-                          onPressed: () => loginProvider.setMessage(null),
-                          icon: Icon(Icons.close),
-                        ),
-                      ),
-                    ),*/
                 ],
               ),
             ),

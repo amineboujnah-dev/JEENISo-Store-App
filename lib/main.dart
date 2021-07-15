@@ -27,11 +27,12 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasData) {
             return MultiProvider(
               providers: [
-                ChangeNotifierProvider<AuthService>.value(value: AuthService()),
+                ChangeNotifierProvider<AuthProvider>.value(
+                    value: AuthProvider()),
                 ChangeNotifierProvider<GoogleSignProvider>.value(
                     value: GoogleSignProvider()),
                 StreamProvider<UserModel?>.value(
-                    value: AuthService().user, initialData: UserModel("")),
+                    value: AuthProvider().user, initialData: UserModel("")),
               ],
               child: MaterialApp(
                 theme: ThemeData(

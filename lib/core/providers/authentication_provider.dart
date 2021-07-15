@@ -6,9 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pets_app/core/models/user_model.dart';
 
-class AuthService with ChangeNotifier {
+class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
-  late String _errorMessage;
+  String _errorMessage = "";
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -49,15 +49,15 @@ class AuthService with ChangeNotifier {
     } on SocketException {
       setLoading(false);
       setMessage("No internet, please connect to the internet");
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       setLoading(false);
-      print(e);
-      setMessage(e.toString());
+      print(e.message);
+      setMessage(e.message);
     }
     notifyListeners();
   }
 
-  Future login(String email, String password) async {
+  Future<User?> login(String email, String password) async {
     try {
       setLoading(true);
       UserCredential authResult = await firebaseAuth.signInWithEmailAndPassword(
