@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:pets_app/core/models/user_model.dart';
+import 'package:pets_app/ui/screens/home/view/home_view.dart';
 
 class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
@@ -68,16 +70,19 @@ class AuthProvider with ChangeNotifier {
     } on SocketException {
       setLoading(false);
       setMessage("No internet, please connect to the internet");
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       setLoading(false);
-      print(e);
-      setMessage(e.toString());
+      print(e.message);
+      setMessage(e.message);
     }
     notifyListeners();
   }
 
-  Future logout() async {
+  Future logout(BuildContext context) async {
     await firebaseAuth.signOut();
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => Wrapper(),
+    ));
   }
 
   void setLoading(val) {

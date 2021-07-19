@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pets_app/core/constants/drawer_configuration.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
-import 'package:pets_app/core/models/user_model.dart';
+
 import 'package:pets_app/core/services/user_service.dart';
 import 'package:pets_app/ui/screens/Profile/Profile%20Details/view/profile_details_view.dart';
-import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
-import 'package:provider/provider.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -75,8 +75,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   bottom: 0,
                                   right: 0,
                                   child: Container(
-                                    height: p.getProportionateScreenWidth(47),
-                                    width: p.getProportionateScreenWidth(47),
+                                    height: p.getProportionateScreenWidth(44),
+                                    width: p.getProportionateScreenWidth(44),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       border: Border.all(
@@ -84,7 +84,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         color: Theme.of(context)
                                             .scaffoldBackgroundColor,
                                       ),
-                                      color: Colors.green,
+                                      color: primaryGreen,
                                     ),
                                     child: IconButton(
                                       onPressed: () async {
@@ -94,7 +94,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         });
                                       },
                                       icon: Icon(
-                                        Icons.photo,
+                                        Icons.add_photo_alternate,
                                         color: Colors.white,
                                       ),
                                     ),

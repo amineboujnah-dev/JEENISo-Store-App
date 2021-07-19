@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:pets_app/ui/screens/home/view/home_view.dart';
-import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
+import 'package:pets_app/core/constants/drawer_configuration.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -24,12 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
     final p = new SizeConfig();
     p.init(context);
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: primaryGreen,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // logo here
             Image.asset(
               "assets/images/adopt_me_logo.png",
               height: p.getProportionateScreenHeight(300),
@@ -37,9 +37,6 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: p.getProportionateScreenHeight(20),
             ),
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.black87),
-            )
           ],
         ),
       ),

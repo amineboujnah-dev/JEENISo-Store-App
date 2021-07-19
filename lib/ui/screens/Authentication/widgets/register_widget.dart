@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/screens/Authentication/widgets/login_widget.dart';
-import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
 

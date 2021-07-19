@@ -5,7 +5,7 @@ import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/screens/Authentication/widgets/register_widget.dart';
-import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +38,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<AuthProvider>(context);
-    final Future<FirebaseApp> _init = Firebase.initializeApp();
 
     final loginwithGoogleProvider = Provider.of<GoogleSignProvider>(context);
     final p = new SizeConfig();

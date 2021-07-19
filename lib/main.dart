@@ -4,6 +4,7 @@ import 'package:pets_app/core/models/user_model.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/screens/SplashScreen/view/splash_screen_view.dart';
+import 'package:pets_app/core/constants/drawer_configuration.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
               ],
               child: MaterialApp(
                 theme: ThemeData(
-                  primarySwatch: Colors.green,
+                  primaryColor: primaryGreen,
                 ),
                 debugShowCheckedModeBanner: false,
                 home: SplashScreen(),
