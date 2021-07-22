@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pets_app/core/constants/images_paths_constants.dart';
 import 'package:pets_app/ui/screens/home/view/home_view.dart';
-import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
+import 'package:pets_app/core/constants/drawer_configuration.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 7), () {
+    Timer(Duration(seconds: 5), () {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (_) => Wrapper()));
     });
@@ -25,22 +25,18 @@ class _SplashScreenState extends State<SplashScreen> {
     final p = new SizeConfig();
     p.init(context);
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: primaryGreen,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // logo here
             Image.asset(
-              logoPath,
+              "assets/images/adopt_me_logo.png",
               height: p.getProportionateScreenHeight(300),
             ),
             SizedBox(
               height: p.getProportionateScreenHeight(20),
             ),
-            CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.black87),
-            )
           ],
         ),
       ),

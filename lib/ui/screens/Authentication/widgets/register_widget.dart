@@ -1,33 +1,31 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
-import 'package:pets_app/core/services/authentication_service.dart';
-import 'package:pets_app/ui/ui_utils/config_setup/config.dart';
+import 'package:pets_app/core/providers/authentication_provider.dart';
+import 'package:pets_app/ui/screens/Authentication/widgets/login_widget.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
+import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
-  final Function toggleScreen;
-
-  const Register({Key? key, required this.toggleScreen}) : super(key: key);
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Register> {
-  late TextEditingController _nameController;
-  late TextEditingController _phoneController;
+  late TextEditingController _confirmPasswordController;
+
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
-  late TextEditingController _addressController;
+
   final _formKey = GlobalKey<FormState>();
+  bool _isObscure = true;
 
   @override
   void initState() {
-    _nameController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _phoneController = TextEditingController();
-
     super.initState();
   }
 
@@ -35,14 +33,14 @@ class _LoginState extends State<Register> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _nameController.dispose();
-    _phoneController.dispose();
+
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final loginProvider = Provider.of<AuthService>(context);
+    final loginProvider = Provider.of<AuthProvider>(context);
     final p = new SizeConfig();
     p.init(context);
     return Scaffold(
@@ -55,24 +53,36 @@ class _LoginState extends State<Register> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  if (loginProvider.errorMessage != "")
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      color: Colors.amberAccent,
+                      child: ListTile(
+                        title: Text(loginProvider.errorMessage),
+                        leading: Icon(Icons.error),
+                        trailing: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              loginProvider.setMessage("");
+                            });
+                          },
+                          icon: Icon(Icons.close),
+                        ),
+                      ),
+                    ),
                   SizedBox(height: p.getProportionateScreenHeight(60)),
                   Text(
                     welcomeLabel.substring(0, 7),
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: welcomeLabelStyle,
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(10)),
                   Text(
                     registerMsg,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                    style: authMsgslStyle,
                   ),
                   SizedBox(height: p.getProportionateScreenHeight(30)),
-                  TextFormField(
+                  /*TextFormField(
                     controller: _nameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -87,10 +97,13 @@ class _LoginState extends State<Register> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  ),
+                  ),*/
                   SizedBox(height: p.getProportionateScreenHeight(30)),
                   TextFormField(
                     controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null ||
                           value.isEmpty ||
@@ -107,8 +120,8 @@ class _LoginState extends State<Register> {
                       ),
                     ),
                   ),
-                  SizedBox(height: p.getProportionateScreenHeight(30)),
-                  TextFormField(
+                  //SizedBox(height: p.getProportionateScreenHeight(30)),
+                  /*TextFormField(
                     controller: _phoneController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -123,10 +136,12 @@ class _LoginState extends State<Register> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                  ),
+                  ),*/
                   SizedBox(height: p.getProportionateScreenHeight(30)),
                   TextFormField(
                     controller: _passwordController,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return nullPasswordMsg;
@@ -135,25 +150,59 @@ class _LoginState extends State<Register> {
                       }
                       return null;
                     },
-                    obscureText: true,
+                    obscureText: _isObscure,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.vpn_key),
                       hintText: pwdHint,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          }),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    validator: (value) {
+                      if (value != _passwordController.text.trim()) {
+                        return differentPasswordMsg;
+                      }
+                      return null;
+                    },
+                    obscureText: _isObscure,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.vpn_key),
+                      hintText: confirmPasswordHint,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          }),
+                    ),
+                  ),
+                  SizedBox(height: p.getProportionateScreenHeight(30)),
                   MaterialButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         print("Email : ${_emailController.text}");
                         print("Password : ${_passwordController.text}");
                         await loginProvider.register(
-                            _nameController.text.trim(),
                             _emailController.text.trim(),
-                            _phoneController.text.trim(),
                             _passwordController.text.trim());
                       }
                     },
@@ -187,25 +236,16 @@ class _LoginState extends State<Register> {
                       Text(existingAcc),
                       SizedBox(width: 5),
                       TextButton(
-                        onPressed: () => widget.toggleScreen(),
+                        onPressed: () {
+                          setState(() {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (_) => Login()));
+                          });
+                        },
                         child: Text(loginLabel),
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
-                  /*if (loginProvider.errorMessage != null)
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      color: Colors.amberAccent,
-                      child: ListTile(
-                        title: Text(loginProvider.errorMessage),
-                        leading: Icon(Icons.error),
-                        trailing: IconButton(
-                          onPressed: () => loginProvider.setMessage(null),
-                          icon: Icon(Icons.close),
-                        ),
-                      ),
-                    ),*/
                 ],
               ),
             ),

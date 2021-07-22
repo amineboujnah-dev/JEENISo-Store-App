@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,7 +10,7 @@ class GoogleSignProvider extends ChangeNotifier {
 
   GoogleSignInAccount get user => _user!;
 
-  Future googleLogin() async {
+  Future<void> googleLogin() async {
     try {
       final googleUser = await googleSignIn.signIn();
       if (googleUser == null) return;
@@ -23,6 +24,22 @@ class GoogleSignProvider extends ChangeNotifier {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
+      if (user != null) {
+        final currentUser = FirebaseAuth.instance.currentUser;
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(currentUser!.uid)
+            .set({
+          "id": currentUser.uid,
+          "email": user.email,
+          "password": "",
+          'name': "",
+          'phoneNumber': "",
+          'address': "",
+          'imageUrl':
+              "https://firebasestorage.googleapis.com/v0/b/test-login-df937.appspot.com/o/adopt_me_logo.png?alt=media&token=14ec5a26-fbbb-42fe-8828-a276295f5101"
+        });
+      }
     } catch (e) {
       print(e.toString());
     }

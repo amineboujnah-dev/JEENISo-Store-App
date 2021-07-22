@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pets_app/core/models/user_model.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
-import 'package:pets_app/core/services/authentication_service.dart';
+import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/screens/SplashScreen/view/splash_screen_view.dart';
+import 'package:pets_app/core/constants/drawer_configuration.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -27,15 +28,16 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasData) {
             return MultiProvider(
               providers: [
-                ChangeNotifierProvider<AuthService>.value(value: AuthService()),
+                ChangeNotifierProvider<AuthProvider>.value(
+                    value: AuthProvider()),
                 ChangeNotifierProvider<GoogleSignProvider>.value(
                     value: GoogleSignProvider()),
-                StreamProvider<User?>.value(
-                    value: AuthService().user, initialData: null),
+                StreamProvider<UserModel?>.value(
+                    value: AuthProvider().user, initialData: UserModel("")),
               ],
               child: MaterialApp(
                 theme: ThemeData(
-                  primarySwatch: Colors.green,
+                  primaryColor: primaryGreen,
                 ),
                 debugShowCheckedModeBanner: false,
                 home: SplashScreen(),
