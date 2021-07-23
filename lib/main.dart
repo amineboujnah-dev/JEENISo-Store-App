@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/core/models/user_model.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
+import 'package:pets_app/core/providers/menu_provider.dart';
 import 'package:pets_app/ui/screens/SplashScreen/view/splash_screen_view.dart';
 import 'package:pets_app/core/constants/drawer_configuration.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
                     value: AuthProvider()),
                 ChangeNotifierProvider<GoogleSignProvider>.value(
                     value: GoogleSignProvider()),
+                ChangeNotifierProvider<MenuProvider>.value(
+                    value: MenuProvider()),
                 StreamProvider<UserModel?>.value(
                     value: AuthProvider().user, initialData: UserModel("")),
               ],
