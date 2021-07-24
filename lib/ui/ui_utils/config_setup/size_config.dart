@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
+import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 
 class SizeConfig {
   late MediaQueryData _mediaQueryData;
   late double _screenWidth;
   late double _screenHeight;
+  late SimpleHiddenDrawerController menuController;
+
   //late Orientation _orientation;
 
   double get screenHeight => _screenHeight;

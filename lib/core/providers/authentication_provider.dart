@@ -81,7 +81,7 @@ class AuthProvider with ChangeNotifier {
   Future logout(BuildContext context) async {
     await firebaseAuth.signOut();
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => Wrapper(),
+      builder: (context) => HomeView(),
     ));
   }
 

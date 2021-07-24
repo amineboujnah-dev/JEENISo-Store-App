@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pets_app/ui/screens/home/view/home_view.dart';
 import 'package:pets_app/core/constants/drawer_configuration.dart';
+import 'package:pets_app/ui/screens/Authentication/view/authentication_view.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(Duration(seconds: 5), () {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => Wrapper()));
+          .pushReplacement(MaterialPageRoute(builder: (_) => Authentication()));
     });
   }
 
