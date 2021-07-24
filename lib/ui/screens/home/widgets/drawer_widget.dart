@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
+import 'package:pets_app/ui/screens/Pets/Add%20Pet/view/add_pet_view.dart';
 import 'package:pets_app/ui/screens/Profile/Profile%20Details/view/profile_details_view.dart';
 import 'package:pets_app/ui/screens/home/view/home_view.dart';
 import 'package:provider/provider.dart';
@@ -142,6 +143,11 @@ void selectedItem(BuildContext context, int index) {
     case 0:
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => Wrapper(),
+      ));
+      break;
+    case 2:
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => AddPetView(),
       ));
       break;
     case 4:

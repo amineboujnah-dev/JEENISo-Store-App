@@ -3,6 +3,26 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/drawer_configuration.dart';
 import 'screen2.dart';
 
+class Animal {
+  String name;
+  String scientificName;
+  double age;
+  String distanceToUser;
+  bool isFemale;
+  String imageUrl;
+  Color backgroundColor;
+
+  Animal({
+    required this.name,
+    required this.scientificName,
+    required this.age,
+    required this.distanceToUser,
+    required this.isFemale,
+    required this.imageUrl,
+    required this.backgroundColor,
+  });
+}
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -132,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: 240,
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                /*child: Row(
+                child: Row(
                   children: [
                     Expanded(
                       child: Stack(
@@ -148,7 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           Align(
                             child: Hero(
                                 tag: 1,
-                                child: Image.asset('assets/images/pet-cat2.png')),
+                                child:
+                                    Image.asset('assets/images/pet-cat1.png')),
                           )
                         ],
                       ),
@@ -164,13 +185,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               bottomRight: Radius.circular(20))),
                     ))
                   ],
-                ),*/
+                ),
               ),
             ),
             Container(
               height: 240,
               margin: EdgeInsets.symmetric(horizontal: 20),
-              /*child: Row(
+              child: Row(
                 children: [
                   Expanded(
                     child: Stack(
@@ -184,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           margin: EdgeInsets.only(top: 50),
                         ),
                         Align(
-                          child: Image.asset('assets/images/pet-cat1.png'),
+                          child: Image.asset('assets/images/pet-cat2.png'),
                         )
                       ],
                     ),
@@ -200,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             bottomRight: Radius.circular(20))),
                   ))
                 ],
-              ),*/
+              ),
             ),
             SizedBox(
               height: 50,

@@ -10,6 +10,7 @@ import 'package:pets_app/core/models/user_model.dart';
 class UserService {
   final String uid;
   var downloadUrl;
+  var _basename;
   UserService({required this.uid});
 
   // collection reference
@@ -53,7 +54,7 @@ class UserService {
       image = await _picker.getImage(source: ImageSource.gallery);
 
       File file = new File(image!.path);
-      String _basename = basename(file.path);
+      _basename = basename(file.path);
 
       if (image != null) {
         //Upload to Firebase
@@ -71,4 +72,6 @@ class UserService {
   }
 
   String get url => downloadUrl;
+
+  String get fileName => _basename;
 }
