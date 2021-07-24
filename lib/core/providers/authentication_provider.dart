@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:pets_app/core/models/user_model.dart';
-import 'package:pets_app/ui/screens/home/view/home_view.dart';
+import 'package:pets_app/ui/screens/Authentication/widgets/login_widget.dart';
 
 class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
@@ -81,7 +81,7 @@ class AuthProvider with ChangeNotifier {
   Future logout(BuildContext context) async {
     await firebaseAuth.signOut();
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => HomeView(),
+      builder: (context) => Login(),
     ));
   }
 
