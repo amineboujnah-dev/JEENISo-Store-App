@@ -3,6 +3,26 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../core/constants/drawer_configuration.dart';
 import 'homeScreen.dart';
 
+class Animal {
+  String name;
+  String scientificName;
+  double age;
+  String distanceToUser;
+  bool isFemale;
+  String imageUrl;
+  Color backgroundColor;
+
+  Animal({
+    required this.name,
+    required this.scientificName,
+    required this.age,
+    required this.distanceToUser,
+    required this.isFemale,
+    required this.imageUrl,
+    required this.backgroundColor,
+  });
+}
+
 class Screen2 extends StatelessWidget {
   final Animal animal = new Animal(
     name: 'Sola',
@@ -61,7 +81,7 @@ class Screen2 extends StatelessWidget {
                     child: Hero(
                       tag: animal.name,
                       child: Image(
-                        image: AssetImage('assets/images/pet-cat1.png'),
+                        image: AssetImage('assets/images/pet-cat2.png'),
                         fit: BoxFit.fitHeight,
                       ),
                     ),

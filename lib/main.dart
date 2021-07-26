@@ -8,6 +8,8 @@ import 'package:pets_app/ui/screens/SplashScreen/view/splash_screen_view.dart';
 import 'package:pets_app/core/constants/drawer_configuration.dart';
 import 'package:provider/provider.dart';
 
+import 'core/providers/menu_provider.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -35,6 +37,8 @@ class MyApp extends StatelessWidget {
                     value: AuthProvider()),
                 ChangeNotifierProvider<GoogleSignProvider>.value(
                     value: GoogleSignProvider()),
+                ChangeNotifierProvider<MenuProvider>.value(
+                    value: MenuProvider()),
                 StreamProvider<UserModel?>.value(
                     value: AuthProvider().user, initialData: UserModel("")),
               ],

@@ -1,27 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pets_app/ui/screens/menu/widgets/menu_icon_widget.dart';
 import '../../../../core/constants/drawer_configuration.dart';
 import 'screen2.dart';
-
-class Animal {
-  String name;
-  String scientificName;
-  double age;
-  String distanceToUser;
-  bool isFemale;
-  String imageUrl;
-  Color backgroundColor;
-
-  Animal({
-    required this.name,
-    required this.scientificName,
-    required this.age,
-    required this.distanceToUser,
-    required this.isFemale,
-    required this.imageUrl,
-    required this.backgroundColor,
-  });
-}
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -29,23 +10,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double xOffset = 0;
-  double yOffset = 0;
-  double scaleFactor = 1;
-
-  bool isDrawerOpen = false;
-
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      transform: Matrix4.translationValues(xOffset, yOffset, 0)
-        ..scale(scaleFactor)
-        ..rotateY(isDrawerOpen ? -0.5 : 0),
-      duration: Duration(milliseconds: 250),
-      decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(isDrawerOpen ? 40 : 0.0)),
-      child: SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(
@@ -55,29 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  isDrawerOpen
-                      ? IconButton(
-                          icon: Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            setState(() {
-                              xOffset = 0;
-                              yOffset = 0;
-                              scaleFactor = 1;
-                              isDrawerOpen = false;
-                            });
-                          },
-                        )
-                      : IconButton(
-                          icon: Icon(Icons.menu),
-                          onPressed: () {
-                            setState(() {
-                              xOffset = 230;
-                              yOffset = 150;
-                              scaleFactor = 0.6;
-                              isDrawerOpen = true;
-                            });
-                          }),
+                  MenuIconWidget(),
                   Column(
                     children: [
                       Text('Address'),
@@ -169,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Hero(
                                 tag: 1,
                                 child:
-                                    Image.asset('assets/images/pet-cat1.png')),
+                                    Image.asset('assets/images/pet-cat2.png')),
                           )
                         ],
                       ),
@@ -205,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           margin: EdgeInsets.only(top: 50),
                         ),
                         Align(
-                          child: Image.asset('assets/images/pet-cat2.png'),
+                          child: Image.asset('assets/images/pet-cat1.png'),
                         )
                       ],
                     ),

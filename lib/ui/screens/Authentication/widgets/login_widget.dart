@@ -1,10 +1,11 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
-import 'package:pets_app/core/providers/google_sign_in_provider.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
+import 'package:pets_app/core/providers/google_sign_in_provider.dart';
 import 'package:pets_app/ui/screens/Authentication/widgets/register_widget.dart';
+import 'package:pets_app/ui/screens/menu/view/menu_view.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +39,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<AuthProvider>(context);
-
-    final loginwithGoogleProvider = Provider.of<GoogleSignProvider>(context);
+    final loginWithGoogleProvider = Provider.of<GoogleSignProvider>(context);
     final p = new SizeConfig();
     p.init(context);
     return Scaffold(
@@ -139,8 +139,13 @@ class _LoginState extends State<Login> {
                       if (_formKey.currentState!.validate()) {
                         print("Email : ${_emailController.text}");
                         print("Password : ${_passwordController.text}");
-                        await loginProvider.login(_emailController.text.trim(),
+                        final User? loginResponse = await loginProvider.login(
+                            _emailController.text.trim(),
                             _passwordController.text.trim());
+                        if (loginResponse != null) {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => MenuView()));
+                        }
                       }
                     },
                     height: 70,
@@ -201,7 +206,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height: p.getProportionateScreenHeight(20)),
                   GestureDetector(
                     onTap: () {
-                      loginwithGoogleProvider.googleLogin();
+                      loginWithGoogleProvider.googleLogin();
                     },
                     child: Container(
                       height: 60.0,

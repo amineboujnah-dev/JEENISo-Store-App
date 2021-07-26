@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pets_app/ui/screens/Home/widgets/drawer_widget.dart';
+
 import 'package:pets_app/ui/screens/Pets/Add%20Pet/widget/add_pet_widget.dart';
 
 class AddPetView extends StatelessWidget {
@@ -7,13 +7,6 @@ class AddPetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          //DrawerScreen(),
-          AddPetWidget(),
-        ],
-      ),
-    );
+    return AddPetWidget();
   }
 }

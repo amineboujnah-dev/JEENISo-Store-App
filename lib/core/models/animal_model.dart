@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-enum Gender { Male, Female }
-
 class Animal {
   String name;
   String type;
-  String age;
+  double age;
   String gender;
   String description;
   String imageUrl;
-  Color backgroundColor;
 
   Animal(
     this.name,
@@ -18,6 +15,5 @@ class Animal {
     this.description,
     this.gender,
     this.imageUrl,
-    this.backgroundColor,
   );
 }
