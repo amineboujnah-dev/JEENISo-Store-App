@@ -10,6 +10,10 @@ import 'package:pets_app/ui/screens/menu/widgets/menu_list_widget.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 
 class MenuView extends StatelessWidget {
+  const MenuView({this.menuViewId});
+
+  final int? menuViewId;
+
   @override
   Widget build(BuildContext context) {
     final sizedConfig = SizeConfig();
@@ -20,8 +24,9 @@ class MenuView extends StatelessWidget {
       menu: MenuListWidget(),
       screenSelectedBuilder:
           (position, SimpleHiddenDrawerController controller) {
+        final int viewPosition = menuViewId ?? position;
         Widget? screenCurrent = HomeScreen();
-        switch (position) {
+        switch (viewPosition) {
           case 0:
             {
               screenCurrent = HomeScreen();

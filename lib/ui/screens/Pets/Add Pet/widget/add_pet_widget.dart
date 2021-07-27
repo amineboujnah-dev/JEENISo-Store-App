@@ -4,8 +4,7 @@ import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/models/animal_model.dart';
 import 'package:pets_app/core/providers/pets_provider.dart';
 import 'package:pets_app/core/services/user_service.dart';
-import 'package:pets_app/ui/screens/Pets/Add%20Pet/view/add_pet_view.dart';
-import 'package:pets_app/ui/screens/Pets/My%20pets/view/my_pets_view.dart';
+import 'package:pets_app/ui/screens/menu/view/menu_view.dart';
 import 'package:pets_app/ui/screens/menu/widgets/menu_icon_widget.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:provider/provider.dart';
@@ -373,7 +372,7 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                         ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              final Future<Animal> addResponse =
+                              final Future<Animal>? addResponse =
                                   petsProvider.addPet(
                                       _nameController.text.trim(),
                                       double.parse(_ageController.text),
@@ -385,7 +384,9 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => MyPetsView()));
+                                        builder: (_) => MenuView(
+                                              menuViewId: 1,
+                                            )));
                               }
                             }
                           },
