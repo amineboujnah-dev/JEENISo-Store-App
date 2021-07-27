@@ -29,8 +29,7 @@ class MenuListItem extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(
             vertical: sizeConfig.getProportionateScreenWidth(24),
-            horizontal: sizeConfig.getProportionateScreenWidth(20)
-        ),
+            horizontal: sizeConfig.getProportionateScreenWidth(20)),
         child: Row(
           children: <Widget>[
             if (menuItemModel?.menuItemIcon != null)

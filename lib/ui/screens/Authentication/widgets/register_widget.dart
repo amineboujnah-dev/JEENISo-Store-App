@@ -205,7 +205,7 @@ class _LoginState extends State<Register> {
                             _passwordController.text.trim());
                       }
                     },
-                    height: 70,
+                    height: p.getProportionateScreenHeight(70),
                     minWidth: loginProvider.isLoading ? null : double.infinity,
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
@@ -241,7 +241,11 @@ class _LoginState extends State<Register> {
                                 MaterialPageRoute(builder: (_) => Login()));
                           });
                         },
-                        child: Text(loginLabel),
+                        child: Text(
+                          loginLabel,
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
                       ),
                     ],
                   ),
