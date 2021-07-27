@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/models/animal_model.dart';
+import 'package:pets_app/core/providers/menu_provider.dart';
 import 'package:pets_app/core/providers/pets_provider.dart';
 import 'package:pets_app/core/services/user_service.dart';
 import 'package:pets_app/ui/screens/menu/view/menu_view.dart';
@@ -52,6 +53,7 @@ class _AddPetWidgetState extends State<AddPetWidget> {
     final currentUser = FirebaseAuth.instance.currentUser;
     UserService userService = UserService(uid: currentUser!.uid);
     final petsProvider = Provider.of<PetsProvider>(context);
+    final menuProvider = Provider.of<MenuProvider>(context);
     final sizeConfig = SizeConfig();
     sizeConfig.init(context);
     return Scaffold(
@@ -381,12 +383,11 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                                       imageUrl,
                                       _descriptionController.text.trim());
                               if (addResponse != null) {
+                                menuProvider.setMenuIndex(1);
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => MenuView(
-                                              menuViewId: 1,
-                                            )));
+                                        builder: (_) => MenuView()));
                               }
                             }
                           },

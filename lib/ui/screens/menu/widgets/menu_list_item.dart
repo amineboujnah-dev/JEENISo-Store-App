@@ -22,6 +22,7 @@ class MenuListItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (menuItemModel?.menuItemIndex != null) {
+          menuProvider.setMenuIndex(menuItemModel!.menuItemIndex);
           sizeConfig.menuController
               .setSelectedMenuPosition(menuItemModel!.menuItemIndex!);
         }
