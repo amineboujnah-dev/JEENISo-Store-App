@@ -148,7 +148,7 @@ class _LoginState extends State<Login> {
                         }
                       }
                     },
-                    height: 70,
+                    height: p.getProportionateScreenHeight(70),
                     minWidth: loginProvider.isLoading ? null : double.infinity,
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
@@ -243,7 +243,11 @@ class _LoginState extends State<Login> {
                                     builder: (context) => Register()));
                           });
                         },
-                        child: Text(registerLabel),
+                        child: Text(
+                          registerLabel,
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
                       ),
                     ],
                   ),
