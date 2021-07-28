@@ -231,14 +231,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           _imageUrl == ""
                                               ? data['imageUrl']
                                               : _imageUrl);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => ProfileView()));
+                                  Navigator.pop(context);
                                 }
                               },
                               style: TextButton.styleFrom(
-                                primary: Colors.green,
+                                backgroundColor: Theme.of(context).primaryColor,
                                 padding: EdgeInsets.symmetric(horizontal: 50),
                                 elevation: 2,
                                 shape: RoundedRectangleBorder(

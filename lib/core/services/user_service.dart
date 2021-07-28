@@ -10,6 +10,7 @@ import 'package:pets_app/core/models/user_model.dart';
 class UserService {
   final String uid;
   var downloadUrl;
+  var _basename;
   UserService({required this.uid});
 
   // collection reference
@@ -28,9 +29,8 @@ class UserService {
 
   // user data from snapshots
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-    return UserData(uid, data['name'], data['phoneNumber'], data['address'],
-        data['imagePath']);
+    return UserData(uid, snapshot.get('name'), snapshot.get('phoneNumber'),
+        snapshot.get('address'), snapshot.get('imageUrl'));
   }
 
   // get user doc stream
@@ -53,7 +53,7 @@ class UserService {
       image = await _picker.getImage(source: ImageSource.gallery);
 
       File file = new File(image!.path);
-      String _basename = basename(file.path);
+      _basename = basename(file.path);
 
       if (image != null) {
         //Upload to Firebase
@@ -71,4 +71,6 @@ class UserService {
   }
 
   String get url => downloadUrl;
+
+  String get fileName => _basename;
 }

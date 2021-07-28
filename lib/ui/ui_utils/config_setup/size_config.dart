@@ -7,7 +7,6 @@ class SizeConfig {
   late double _screenWidth;
   late double _screenHeight;
   late SimpleHiddenDrawerController menuController;
-
   //late Orientation _orientation;
 
   double get screenHeight => _screenHeight;

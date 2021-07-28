@@ -91,7 +91,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           ),
                           child: ElevatedButton(
                             style: TextButton.styleFrom(
-                              primary: Colors.green,
+                              backgroundColor: Theme.of(context).primaryColor,
                               padding: EdgeInsets.symmetric(horizontal: 50),
                               elevation: 2,
                               shape: RoundedRectangleBorder(

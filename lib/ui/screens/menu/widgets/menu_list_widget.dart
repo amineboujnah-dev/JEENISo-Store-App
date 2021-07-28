@@ -81,7 +81,7 @@ class _MenuListWidgetState extends State<MenuListWidget> {
                   padding: EdgeInsets.only(
                       bottom: sizeConfig.getProportionateScreenWidth(20),
                       left: sizeConfig.getProportionateScreenWidth(20),
-                      top: sizeConfig.screenHeight * 0.15),
+                      top: sizeConfig.screenHeight * 0.12),
                   child: Row(
                     children: <Widget>[
                       Icon(

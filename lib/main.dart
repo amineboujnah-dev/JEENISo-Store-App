@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:pets_app/core/models/user_model.dart';
 import 'package:pets_app/core/providers/google_sign_in_provider.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
+import 'package:pets_app/core/providers/pets_provider.dart';
 import 'package:pets_app/core/providers/menu_provider.dart';
 import 'package:pets_app/ui/screens/SplashScreen/view/splash_screen_view.dart';
 import 'package:pets_app/core/constants/drawer_configuration.dart';
 import 'package:provider/provider.dart';
+
+import 'core/providers/menu_provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,6 +32,8 @@ class MyApp extends StatelessWidget {
           } else if (snapshot.hasData) {
             return MultiProvider(
               providers: [
+                ChangeNotifierProvider<PetsProvider>.value(
+                    value: PetsProvider()),
                 ChangeNotifierProvider<AuthProvider>.value(
                     value: AuthProvider()),
                 ChangeNotifierProvider<GoogleSignProvider>.value(

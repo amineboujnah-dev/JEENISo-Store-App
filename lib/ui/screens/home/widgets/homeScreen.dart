@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/ui/screens/menu/widgets/menu_icon_widget.dart';
 import '../../../../core/constants/drawer_configuration.dart';
-import 'screen2.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -94,14 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Screen2()));
-              },
+              onTap: () {},
               child: Container(
                 height: 240,
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                /*child: Row(
+                child: Row(
                   children: [
                     Expanded(
                       child: Stack(
@@ -117,7 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           Align(
                             child: Hero(
                                 tag: 1,
-                                child: Image.asset('assets/images/pet-cat2.png')),
+                                child:
+                                    Image.asset('assets/images/pet-cat2.png')),
                           )
                         ],
                       ),
@@ -133,13 +130,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               bottomRight: Radius.circular(20))),
                     ))
                   ],
-                ),*/
+                ),
               ),
             ),
             Container(
               height: 240,
               margin: EdgeInsets.symmetric(horizontal: 20),
-              /*child: Row(
+              child: Row(
                 children: [
                   Expanded(
                     child: Stack(
@@ -169,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             bottomRight: Radius.circular(20))),
                   ))
                 ],
-              ),*/
+              ),
             ),
             SizedBox(
               height: 50,

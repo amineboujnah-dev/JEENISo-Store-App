@@ -22,7 +22,7 @@ const List<MenuItemModel> menuItemsList = [
       menuItemIcon: FontAwesomeIcons.paw),
   MenuItemModel(
       menuItemIndex: 1,
-      menuItemTitle: "Donation",
+      menuItemTitle: "My pets",
       menuItemIcon: FontAwesomeIcons.home),
   MenuItemModel(
       menuItemIndex: 2,
