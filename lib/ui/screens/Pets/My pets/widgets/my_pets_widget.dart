@@ -96,7 +96,13 @@ class _MyPetsWidgetState extends State<MyPetsWidget> {
                   child: Column(
                     children: snapshot.data!.docs.map((document) {
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          /*Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Screen2(id: document.id)));*/
+                        },
                         child: Padding(
                           padding: EdgeInsets.only(
                             bottom: 10.0,

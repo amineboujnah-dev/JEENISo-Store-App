@@ -1,42 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../core/constants/drawer_configuration.dart';
-import 'homeScreen.dart';
+import 'package:pets_app/core/models/animal_model.dart';
+import 'package:pets_app/core/models/user_model.dart';
+import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
+import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class Animal {
-  String name;
-  String scientificName;
-  double age;
-  String distanceToUser;
-  bool isFemale;
-  String imageUrl;
-  Color backgroundColor;
+class PetDetailsWidget extends StatefulWidget {
+  final Animal animal;
+  PetDetailsWidget({required this.animal});
 
-  Animal({
-    required this.name,
-    required this.scientificName,
-    required this.age,
-    required this.distanceToUser,
-    required this.isFemale,
-    required this.imageUrl,
-    required this.backgroundColor,
-  });
+  @override
+  _UserInfoState createState() => _UserInfoState();
 }
 
-class Screen2 extends StatelessWidget {
-  final Animal animal = new Animal(
-    name: 'Sola',
-    scientificName: 'Abyssinian cat',
-    age: 2.0,
-    distanceToUser: '3.6 km',
-    isFemale: true,
-    imageUrl: 'assets/images/pet-cat1.png',
-    backgroundColor: Color.fromRGBO(203, 213, 216, 1.0),
-  );
+class _UserInfoState extends State<PetDetailsWidget> {
+  bool onPressed = false;
+  String toastMsg = "";
+  share(BuildContext context, Animal animal) {
+    final RenderBox box = context.findRenderObject() as RenderBox;
+
+    Share.share("${animal.name} - ${animal.type}",
+        subject: animal.description,
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final data = Provider.of<UserData>(context);
+
+    final sizeConfig = SizeConfig();
+    sizeConfig.init(context);
 
     return Scaffold(
       body: Stack(
@@ -48,8 +44,8 @@ class Screen2 extends StatelessWidget {
                 alignment: Alignment.center,
                 children: <Widget>[
                   Container(
-                    height: screenHeight * 0.5,
-                    color: animal.backgroundColor,
+                    height: sizeConfig.screenHeight * 0.5,
+                    color: Color.fromRGBO(203, 213, 216, 1.0),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 60.0),
@@ -68,8 +64,13 @@ class Screen2 extends StatelessWidget {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              Icon(FontAwesomeIcons.share,
-                                  color: Theme.of(context).primaryColor),
+                              InkWell(
+                                onTap: () async {
+                                  await share(context, widget.animal);
+                                },
+                                child: Icon(FontAwesomeIcons.share,
+                                    color: Theme.of(context).primaryColor),
+                              ),
                             ],
                           ),
                         ],
@@ -77,11 +78,11 @@ class Screen2 extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: screenHeight * 0.35,
+                    height: sizeConfig.getProportionateScreenHeight(250),
                     child: Hero(
-                      tag: animal.name,
+                      tag: widget.animal.name,
                       child: Image(
-                        image: AssetImage('assets/images/pet-cat2.png'),
+                        image: NetworkImage(widget.animal.imageUrl),
                         fit: BoxFit.fitHeight,
                       ),
                     ),
@@ -89,7 +90,7 @@ class Screen2 extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 45,
+                height: sizeConfig.getProportionateScreenHeight(45),
               ),
               Expanded(
                   child: Container(
@@ -108,11 +109,7 @@ class Screen2 extends StatelessWidget {
                         children: <Widget>[
                           CircleAvatar(
                             radius: 22.0,
-                            backgroundImage:
-                                AssetImage('assets/images/adopt_me_logo.png'),
-                          ),
-                          SizedBox(
-                            width: 0.0,
+                            backgroundImage: NetworkImage(data.imageUrl),
                           ),
                           Flexible(
                             child: Column(
@@ -123,7 +120,7 @@ class Screen2 extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(
-                                      'User User',
+                                      data.name,
                                       style: TextStyle(
                                         color: Theme.of(context).primaryColor,
                                         fontSize: 16.0,
@@ -131,7 +128,7 @@ class Screen2 extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'May 25, 2019',
+                                      widget.animal.date.toString(),
                                       style: TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.w600,
@@ -140,7 +137,8 @@ class Screen2 extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 8.0,
+                                  height: sizeConfig
+                                      .getProportionateScreenHeight(8),
                                 ),
                                 Text(
                                   'Owner',
@@ -155,10 +153,10 @@ class Screen2 extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 20.0,
+                        height: sizeConfig.getProportionateScreenHeight(20),
                       ),
                       Text(
-                        'My job requires moving to another country. I don\'t have the opportunity to take the cat with me. I am looking for good people who will shelter Sola.',
+                        widget.animal.description,
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.w600,
@@ -181,19 +179,41 @@ class Screen2 extends StatelessWidget {
                         elevation: 4.0,
                         color: Theme.of(context).primaryColor,
                         child: Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Icon(
-                            FontAwesomeIcons.heart,
-                            color: Colors.white,
+                          padding: EdgeInsets.all(7),
+                          child: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                onPressed = !onPressed;
+                                toastMsg = 'Added to Favorites !';
+                              });
+                              Fluttertoast.showToast(
+                                  msg: toastMsg,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.TOP);
+                            },
+                            icon: onPressed == false
+                                ? Icon(
+                                    FontAwesomeIcons.heart,
+                                    color: Colors.white,
+                                  )
+                                : Icon(
+                                    FontAwesomeIcons.solidHeart,
+                                    color: Colors.white,
+                                  ),
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 24.0,
+                        width: sizeConfig.getProportionateScreenWidth(24),
                       ),
                       Expanded(
-                        child: Material(
-                          borderRadius: BorderRadius.circular(20.0),
+                        child: MaterialButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          onPressed: () async {
+                            await launch("tel://${data.phoneNumber}");
+                          },
                           elevation: 4.0,
                           color: Theme.of(context).primaryColor,
                           child: Padding(
@@ -213,7 +233,7 @@ class Screen2 extends StatelessWidget {
                     ],
                   ),
                 ),
-                height: 100,
+                height: sizeConfig.getProportionateScreenHeight(100),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor.withOpacity(0.06),
                   borderRadius: BorderRadius.only(
@@ -242,7 +262,7 @@ class Screen2 extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         Text(
-                          animal.name,
+                          widget.animal.name,
                           style: TextStyle(
                             fontSize: 26.0,
                             color: Theme.of(context).primaryColor,
@@ -250,7 +270,7 @@ class Screen2 extends StatelessWidget {
                           ),
                         ),
                         Icon(
-                          animal.isFemale
+                          widget.animal.gender == 'Female'
                               ? FontAwesomeIcons.venus
                               : FontAwesomeIcons.mars,
                           color: Colors.grey,
@@ -258,13 +278,13 @@ class Screen2 extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 10.0,
+                      height: sizeConfig.getProportionateScreenHeight(10),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          animal.scientificName,
+                          widget.animal.type,
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Theme.of(context).primaryColor,
@@ -272,7 +292,7 @@ class Screen2 extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${animal.age} years old',
+                          '${widget.animal.age} years old',
                           style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.w600,
@@ -281,7 +301,7 @@ class Screen2 extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 10.0,
+                      height: sizeConfig.getProportionateScreenHeight(10),
                     ),
                     Row(
                       children: <Widget>[
@@ -291,10 +311,10 @@ class Screen2 extends StatelessWidget {
                           size: 16.0,
                         ),
                         SizedBox(
-                          width: 6.0,
+                          width: sizeConfig.getProportionateScreenWidth(6),
                         ),
                         Text(
-                          'Address',
+                          data.address,
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Theme.of(context).primaryColor,
@@ -309,7 +329,7 @@ class Screen2 extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                height: 140.0,
+                height: sizeConfig.getProportionateScreenHeight(150),
               ),
             ),
           )

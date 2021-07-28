@@ -377,7 +377,7 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                               final Future<Animal>? addResponse =
                                   petsProvider.addPet(
                                       _nameController.text.trim(),
-                                      double.parse(_ageController.text),
+                                      _ageController.text.trim(),
                                       dropdownValue,
                                       _typeController.text.trim(),
                                       imageUrl,

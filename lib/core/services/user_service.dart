@@ -29,9 +29,8 @@ class UserService {
 
   // user data from snapshots
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-    return UserData(uid, data['name'], data['phoneNumber'], data['address'],
-        data['imagePath']);
+    return UserData(uid, snapshot.get('name'), snapshot.get('phoneNumber'),
+        snapshot.get('address'), snapshot.get('imageUrl'));
   }
 
   // get user doc stream

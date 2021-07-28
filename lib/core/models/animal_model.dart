@@ -1,19 +1,17 @@
-import 'package:flutter/material.dart';
-
 class Animal {
   String name;
   String type;
-  double age;
+  String age;
   String gender;
   String description;
   String imageUrl;
-
+  String? date;
   Animal(
-    this.name,
-    this.type,
-    this.age,
-    this.description,
-    this.gender,
-    this.imageUrl,
-  );
+      {required this.name,
+      required this.type,
+      required this.age,
+      required this.description,
+      required this.gender,
+      required this.imageUrl,
+      this.date});
 }

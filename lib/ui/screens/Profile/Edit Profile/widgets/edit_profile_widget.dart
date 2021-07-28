@@ -231,10 +231,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           _imageUrl == ""
                                               ? data['imageUrl']
                                               : _imageUrl);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => ProfileView()));
+                                  Navigator.pop(context);
                                 }
                               },
                               style: TextButton.styleFrom(
