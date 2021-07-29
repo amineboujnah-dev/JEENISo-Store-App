@@ -31,7 +31,7 @@ const List<MenuItemModel> menuItemsList = [
   MenuItemModel(
       menuItemIndex: 3,
       menuItemTitle: "Favorites",
-      menuItemIcon: FontAwesomeIcons.heart),
+      menuItemIcon: FontAwesomeIcons.solidHeart),
   MenuItemModel(
       menuItemIndex: 4,
       menuItemTitle: "Profile",

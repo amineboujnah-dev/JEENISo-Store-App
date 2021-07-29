@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/models/animal_model.dart';
+import 'package:pets_app/core/models/user_model.dart';
 import 'package:pets_app/core/providers/menu_provider.dart';
-import 'package:pets_app/core/providers/pets_provider.dart';
+import 'package:pets_app/core/services/pets_service.dart';
 import 'package:pets_app/core/services/user_service.dart';
 import 'package:pets_app/ui/screens/menu/view/menu_view.dart';
 import 'package:pets_app/ui/screens/menu/widgets/menu_icon_widget.dart';
@@ -50,9 +51,9 @@ class _AddPetWidgetState extends State<AddPetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    UserService userService = UserService(uid: currentUser!.uid);
-    final petsProvider = Provider.of<PetsProvider>(context);
+    final user = Provider.of<UserModel?>(context);
+    UserService userService = UserService(uid: user!.id);
+    final petsProvider = PetsService();
     final menuProvider = Provider.of<MenuProvider>(context);
     final sizeConfig = SizeConfig();
     sizeConfig.init(context);
@@ -376,6 +377,7 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                             if (_formKey.currentState!.validate()) {
                               final Future<Animal>? addResponse =
                                   petsProvider.addPet(
+                                      user.id,
                                       _nameController.text.trim(),
                                       _ageController.text.trim(),
                                       dropdownValue,

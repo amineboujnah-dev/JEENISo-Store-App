@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pets_app/core/models/animal_model.dart';
 import 'package:pets_app/core/models/user_model.dart';
+import 'package:pets_app/core/services/pets_service.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -17,8 +18,8 @@ class PetDetailsWidget extends StatefulWidget {
 }
 
 class _UserInfoState extends State<PetDetailsWidget> {
-  bool onPressed = false;
   String toastMsg = "";
+
   share(BuildContext context, Animal animal) {
     final RenderBox box = context.findRenderObject() as RenderBox;
 
@@ -30,9 +31,11 @@ class _UserInfoState extends State<PetDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     final data = Provider.of<UserData>(context);
-
+    final user = Provider.of<UserModel?>(context);
     final sizeConfig = SizeConfig();
     sizeConfig.init(context);
+    final petsProvider = PetsService();
+    final List? list = widget.animal.myFavorites;
 
     return Scaffold(
       body: Stack(
@@ -181,23 +184,35 @@ class _UserInfoState extends State<PetDetailsWidget> {
                         child: Padding(
                           padding: EdgeInsets.all(7),
                           child: IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               setState(() {
-                                onPressed = !onPressed;
-                                toastMsg = 'Added to Favorites !';
+                                if (list!.contains(user!.id) &&
+                                    list.contains(widget.animal.id)) {
+                                  list.remove(user.id);
+                                  list.remove(widget.animal.id);
+                                  petsProvider.addPetToFavorites(
+                                      user, widget.animal.id.toString(), list);
+                                  toastMsg = 'Removed from Favorites';
+                                } else {
+                                  list.add(user.id);
+                                  list.add(widget.animal.id);
+                                  petsProvider.addPetToFavorites(
+                                      user, widget.animal.id.toString(), list);
+                                  toastMsg = 'Added to Favorites';
+                                }
                               });
                               Fluttertoast.showToast(
                                   msg: toastMsg,
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.TOP);
                             },
-                            icon: onPressed == false
+                            icon: list!.contains(user!.id)
                                 ? Icon(
-                                    FontAwesomeIcons.heart,
+                                    FontAwesomeIcons.solidHeart,
                                     color: Colors.white,
                                   )
                                 : Icon(
-                                    FontAwesomeIcons.solidHeart,
+                                    FontAwesomeIcons.heart,
                                     color: Colors.white,
                                   ),
                           ),

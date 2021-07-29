@@ -13,13 +13,14 @@ class AnimalCard extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
     final sizeConfig = SizeConfig();
     sizeConfig.init(context);
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PetDetailsView(animal: animal)));
+                builder: (context) => PetDetailsView(
+                      animal: animal,
+                    )));
       },
       child: Padding(
         padding: EdgeInsets.only(

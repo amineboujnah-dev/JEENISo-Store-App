@@ -1,4 +1,6 @@
 class Animal {
+  String? id;
+  String userID;
   String name;
   String type;
   String age;
@@ -6,12 +8,16 @@ class Animal {
   String description;
   String imageUrl;
   String? date;
+  List? myFavorites;
   Animal(
-      {required this.name,
+      {this.id,
+      required this.userID,
+      required this.name,
       required this.type,
       required this.age,
       required this.description,
       required this.gender,
       required this.imageUrl,
-      this.date});
+      this.date,
+      this.myFavorites});
 }
