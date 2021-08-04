@@ -24,11 +24,15 @@ class GoogleSignProvider extends ChangeNotifier {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
-      if (user != null) {
-        final currentUser = FirebaseAuth.instance.currentUser;
+      final currentUser = FirebaseAuth.instance.currentUser;
+      DocumentSnapshot ds = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(currentUser!.uid)
+          .get();
+      if (!ds.exists) {
         FirebaseFirestore.instance
             .collection("users")
-            .doc(currentUser!.uid)
+            .doc(currentUser.uid)
             .set({
           "id": currentUser.uid,
           "email": user.email,

@@ -109,6 +109,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     buildTextField("Address", "Tunisia, Sousse", false),*/
                         TextFormField(
                           initialValue: data['name'],
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -148,8 +149,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                         SizedBox(height: p.getProportionateScreenHeight(30)),*/
                         TextFormField(
+                          maxLength: 8,
                           initialValue: data['phoneNumber'],
                           keyboardType: TextInputType.phone,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           textInputAction: TextInputAction.next,
                           //controller: _phoneController,
                           validator: (value) {
@@ -171,19 +174,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         SizedBox(height: p.getProportionateScreenHeight(30)),
                         TextFormField(
                           initialValue: data['address'],
-                          textInputAction: TextInputAction.next,
-                          //controller: _passwordController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return nullPasswordMsg;
-                            } else if (value.length < 6) {
-                              return lengthPasswordMsg;
+                              return nullAddressMsg;
                             }
                             return null;
                           },
                           onChanged: (val) =>
                               setState(() => _currentAddress = val),
-
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.location_city),
                             hintText: addressHint,

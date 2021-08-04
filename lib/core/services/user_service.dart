@@ -29,8 +29,13 @@ class UserService {
 
   // user data from snapshots
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    return UserData(uid, snapshot.get('name'), snapshot.get('phoneNumber'),
-        snapshot.get('address'), snapshot.get('imageUrl'));
+    return UserData(
+        uid,
+        snapshot.get('name'),
+        snapshot.get('email'),
+        snapshot.get('phoneNumber'),
+        snapshot.get('address'),
+        snapshot.get('imageUrl'));
   }
 
   // get user doc stream
@@ -58,7 +63,7 @@ class UserService {
       if (image != null) {
         //Upload to Firebase
         var snapshot =
-            await _storage.ref().child('profiles/$_basename').putFile(file);
+            await _storage.ref().child('images/$_basename').putFile(file);
 
         downloadUrl = await snapshot.ref.getDownloadURL();
         print(downloadUrl);

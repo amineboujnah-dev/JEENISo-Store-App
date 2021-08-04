@@ -6,6 +6,6 @@ class MyPetsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyPets();
+    return MyPetsWidget();
   }
 }

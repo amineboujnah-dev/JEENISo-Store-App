@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pets_app/core/constants/drawer_configuration.dart';
 import 'package:pets_app/core/models/animal_model.dart';
 import 'package:pets_app/ui/screens/menu/widgets/menu_icon_widget.dart';
@@ -28,29 +29,28 @@ class _BrewListState extends State<AnimalList> {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.max,
               children: [
                 MenuIconWidget(),
-                Column(
+                SizedBox(
+                  width: sizeConfig.getProportionateScreenWidth(100),
+                ),
+                Row(
                   children: [
-                    Text('Address'),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: primaryGreen,
-                        ),
-                        Text('Tunisia'),
-                      ],
+                    Icon(
+                      FontAwesomeIcons.solidHeart,
+                      color: primaryGreen,
+                    ),
+                    SizedBox(
+                      width: sizeConfig.getProportionateScreenWidth(5),
+                    ),
+                    Text(
+                      'Favorites',
+                      style: TextStyle(fontSize: 17),
                     ),
                   ],
-                ),
-                CircleAvatar(
-                  radius: 24.0,
-                  backgroundImage:
-                      AssetImage('assets/images/adopt_me_logo.png'),
                 ),
               ],
             ),
@@ -58,7 +58,7 @@ class _BrewListState extends State<AnimalList> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-            decoration: BoxDecoration(
+            /*decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(20)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +67,7 @@ class _BrewListState extends State<AnimalList> {
                 Text('Search pet'),
                 Icon(Icons.settings)
               ],
-            ),
+            ),*/
           ),
           ListView.builder(
             physics: ScrollPhysics(),

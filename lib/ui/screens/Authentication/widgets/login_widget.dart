@@ -209,8 +209,8 @@ class _LoginState extends State<Login> {
                       loginWithGoogleProvider.googleLogin();
                     },
                     child: Container(
-                      height: 60.0,
-                      width: 60.0,
+                      height: p.getProportionateScreenHeight(60),
+                      width: p.getProportionateScreenWidth(45),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,

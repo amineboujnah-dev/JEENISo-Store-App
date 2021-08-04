@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pets_app/core/constants/drawer_configuration.dart';
 import 'package:pets_app/ui/screens/Profile/Edit%20Profile/view/edit_profile_view.dart';
 import 'package:pets_app/ui/screens/menu/widgets/menu_icon_widget.dart';
@@ -40,24 +41,52 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 50,
+                  height: sizeConfig.getProportionateScreenHeight(50),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: sizeConfig.getProportionateScreenWidth(20)),
-                  child: MenuIconWidget(),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      MenuIconWidget(),
+                      SizedBox(
+                        width: sizeConfig.getProportionateScreenWidth(100),
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.userAlt,
+                            color: primaryGreen,
+                          ),
+                          SizedBox(
+                            width: sizeConfig.getProportionateScreenWidth(5),
+                          ),
+                          Text(
+                            'Profile',
+                            style: TextStyle(fontSize: 17),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: sizeConfig.getProportionateScreenHeight(30),
                 ),
                 Center(
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
                         Container(
-                          height: 140,
-                          width: 140,
+                          height: sizeConfig.getProportionateScreenHeight(140),
+                          width: sizeConfig.getProportionateScreenWidth(140),
                           //margin: EdgeInsets.only(top: 30),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                width: 4,
+                                width:
+                                    sizeConfig.getProportionateScreenWidth(5),
                                 color: Theme.of(context).primaryColor),
                             shape: BoxShape.circle,
                             color: Colors.white,
@@ -65,7 +94,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 image: NetworkImage(data['imageUrl'])),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(
+                          height: sizeConfig.getProportionateScreenHeight(20),
+                        ),
                         Text(
                           data['name'],
                           style: TextStyle(

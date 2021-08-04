@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
 import 'package:hidden_drawer_menu/simple_hidden_drawer/animated_drawer_content.dart';
 import 'package:hidden_drawer_menu/simple_hidden_drawer/simple_hidden_drawer.dart';
+import 'package:pets_app/core/models/animal_model.dart';
 import 'package:pets_app/core/models/user_model.dart';
 import 'package:pets_app/core/providers/menu_provider.dart';
 import 'package:pets_app/core/services/user_service.dart';
 import 'package:pets_app/ui/screens/Home/widgets/stream_provider.dart';
 import 'package:pets_app/ui/screens/Pets/Add%20Pet/view/add_pet_view.dart';
+import 'package:pets_app/ui/screens/Pets/Add%20Pet/widget/add_pet_2.dart';
 import 'package:pets_app/ui/screens/Pets/Favorites/view/favorites_view.dart';
 import 'package:pets_app/ui/screens/Pets/My%20pets/view/my_pets_view.dart';
 import 'package:pets_app/ui/screens/Profile/Profile%20Details/view/profile_details_view.dart';
@@ -14,7 +16,7 @@ import 'package:pets_app/ui/screens/menu/widgets/menu_list_widget.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:provider/provider.dart';
 
-class MenuView extends StatelessWidget {
+class MenuView2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sizedConfig = SizeConfig();
@@ -46,7 +48,7 @@ class MenuView extends StatelessWidget {
             break;
           case 2:
             {
-              screenCurrent = AddPetView();
+              screenCurrent = AddPet2();
             }
             break;
           case 3:

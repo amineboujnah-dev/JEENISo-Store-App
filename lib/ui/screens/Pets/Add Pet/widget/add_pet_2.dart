@@ -1,4 +1,4 @@
-import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pets_app/core/constants/drawer_configuration.dart';
@@ -15,48 +15,40 @@ import 'package:provider/provider.dart';
 
 import 'button_widget.dart';
 
-class AddPetWidget extends StatefulWidget {
-  const AddPetWidget({Key? key}) : super(key: key);
-
+class AddPet2 extends StatefulWidget {
   @override
   _AddPetWidgetState createState() => _AddPetWidgetState();
 }
 
-class _AddPetWidgetState extends State<AddPetWidget> {
+class _AddPetWidgetState extends State<AddPet2> {
+  late Animal animal;
+  late String _currentGender;
+
+  @override
+  void initState() {
+    animal = Provider.of<Animal>(context, listen: false);
+    _currentGender = animal.gender;
+    print(animal.id);
+    super.initState();
+  }
+
+  String _currentName = "";
+  String _currentAge = "";
+  String _currentType = "";
+  String _currentImageUrl = "";
+  String _currentDescription = "";
   String dropdownValue = 'Male';
   String imageLabel = 'No image selected';
   String imageUrl = "";
-  late TextEditingController _nameController;
-  late TextEditingController _ageController;
-  late TextEditingController _typeController;
-  late TextEditingController _descriptionController;
 
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    _nameController = TextEditingController();
-    _ageController = TextEditingController();
-    _typeController = TextEditingController();
-    _descriptionController = TextEditingController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _ageController.dispose();
-    _typeController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel?>(context);
-    UserService userService = UserService(uid: user!.id);
-    final petsProvider = PetsService();
     final menuProvider = Provider.of<MenuProvider>(context);
+    UserService userService = UserService(uid: user!.id);
+    final petsService = PetsService();
     final sizeConfig = SizeConfig();
     sizeConfig.init(context);
     return Scaffold(
@@ -80,14 +72,14 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                   Row(
                     children: [
                       Icon(
-                        FontAwesomeIcons.plus,
+                        FontAwesomeIcons.edit,
                         color: primaryGreen,
                       ),
                       SizedBox(
                         width: sizeConfig.getProportionateScreenWidth(5),
                       ),
                       Text(
-                        'Add pet',
+                        'Update pet',
                         style: TextStyle(fontSize: 17),
                       ),
                     ],
@@ -120,9 +112,12 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                                   height: sizeConfig
                                       .getProportionateScreenHeight(15)),
                               TextFormField(
-                                controller: _nameController,
+                                initialValue: animal.name,
                                 keyboardType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
+                                onChanged: (val) {
+                                  setState(() => _currentName = val);
+                                },
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -155,9 +150,12 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                                   height: sizeConfig
                                       .getProportionateScreenHeight(8)),
                               TextFormField(
-                                controller: _ageController,
+                                initialValue: animal.age,
                                 keyboardType: TextInputType.number,
                                 textInputAction: TextInputAction.next,
+                                onChanged: (val) {
+                                  setState(() => _currentAge = val);
+                                },
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -199,7 +197,7 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                                 decoration: InputDecoration(
                                   hintStyle:
                                       TextStyle(fontWeight: FontWeight.w500),
-                                  hintText: dropdownValue,
+                                  hintText: _currentGender,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -218,7 +216,7 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                                                 title: Text('Male'),
                                                 onTap: () {
                                                   setState(() {
-                                                    dropdownValue = 'Male';
+                                                    _currentGender = 'Male';
                                                   });
                                                   Navigator.pop(context);
                                                 },
@@ -228,7 +226,7 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                                                 title: Text('Female'),
                                                 onTap: () {
                                                   setState(() {
-                                                    dropdownValue = 'Female';
+                                                    _currentGender = 'Female';
                                                   });
 
                                                   Navigator.pop(context);
@@ -260,8 +258,12 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                                   height: sizeConfig
                                       .getProportionateScreenHeight(8)),
                               TextFormField(
-                                controller: _typeController,
+                                initialValue: animal.type,
                                 keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
+                                onChanged: (val) {
+                                  setState(() => _currentType = val);
+                                },
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
@@ -332,8 +334,12 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                     SizedBox(
                         height: sizeConfig.getProportionateScreenHeight(8)),
                     TextFormField(
-                      controller: _descriptionController,
+                      initialValue: animal.description,
                       keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      onChanged: (val) {
+                        setState(() => _currentDescription = val);
+                      },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       maxLines: 5,
                       validator: (value) {
@@ -362,18 +368,11 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                             ),
                           ),
                           onPressed: () {
-                            // _formKey.currentState!.reset();
-
-                            setState(() {
-                              _nameController.text = "";
-                              _ageController.text = "";
-                              _typeController.text = "";
-                              _descriptionController.text = "";
-                              dropdownValue = 'Male';
-                              imageUrl = '';
-                            });
+                            menuProvider.setMenuIndex(1);
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (_) => MenuView()));
                           },
-                          child: Text("RESET",
+                          child: Text("CANCEL",
                               style: TextStyle(
                                   fontSize: 14,
                                   letterSpacing: 2.2,
@@ -382,15 +381,28 @@ class _AddPetWidgetState extends State<AddPetWidget> {
                         ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              final Future<Animal>? addResponse =
-                                  petsProvider.addPet(
-                                      user.id,
-                                      _nameController.text.trim(),
-                                      _ageController.text.trim(),
-                                      dropdownValue,
-                                      _typeController.text.trim(),
-                                      imageUrl,
-                                      _descriptionController.text.trim());
+                              final Future<Animal> addResponse =
+                                  petsService.updatePetData(
+                                      animal.userID,
+                                      animal.id,
+                                      _currentName.isEmpty
+                                          ? animal.name
+                                          : _currentName,
+                                      _currentAge.isEmpty
+                                          ? animal.age
+                                          : _currentAge,
+                                      _currentGender.isEmpty
+                                          ? animal.gender
+                                          : _currentGender,
+                                      _currentType.isEmpty
+                                          ? animal.type
+                                          : _currentType,
+                                      imageUrl.isEmpty
+                                          ? animal.imageUrl
+                                          : imageUrl,
+                                      _currentDescription.isEmpty
+                                          ? animal.description
+                                          : _currentDescription);
                               if (addResponse != null) {
                                 menuProvider.setMenuIndex(1);
                                 Navigator.pushReplacement(

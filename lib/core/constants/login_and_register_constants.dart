@@ -7,6 +7,7 @@ const String nullAgeMsg = "Please enter an age";
 const String nullTypeMsg = "Please enter a type";
 const String nullAboutMsg = "Please enter a description";
 const String nullPhoneMsg = "Please enter a phone number";
+const String nullAddressMsg = "Please enter an address";
 const String emailHint = "Email";
 const String PhoneHint = "Phone Number";
 const String addressHint = "Address";

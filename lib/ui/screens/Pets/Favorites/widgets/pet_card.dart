@@ -75,7 +75,8 @@ class AnimalCard extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height:
+                                  sizeConfig.getProportionateScreenHeight(10),
                             ),
                             Text(
                               animal.type,
@@ -86,7 +87,8 @@ class AnimalCard extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height:
+                                  sizeConfig.getProportionateScreenHeight(10),
                             ),
                             Text(
                               '${animal.age} years old',
@@ -96,7 +98,8 @@ class AnimalCard extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height:
+                                  sizeConfig.getProportionateScreenHeight(10),
                             ),
                             Row(
                               children: <Widget>[
@@ -106,7 +109,8 @@ class AnimalCard extends StatelessWidget {
                                   size: 16.0,
                                 ),
                                 SizedBox(
-                                  width: 6.0,
+                                  width:
+                                      sizeConfig.getProportionateScreenWidth(6),
                                 ),
                                 Text(
                                   animal.date.toString(),
@@ -132,17 +136,27 @@ class AnimalCard extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    height: 190.0,
+                    height: sizeConfig.getProportionateScreenHeight(190),
                     width: deviceWidth * 0.4,
                   ),
                   Hero(
                     tag: animal.name,
-                    child: Image(
-                      image: NetworkImage(animal.imageUrl),
-                      height: 220.0,
-                      fit: BoxFit.fitHeight,
-                      width: deviceWidth * 0.4,
-                    ),
+                    child: animal.imageUrl != ""
+                        ? Image(
+                            image: NetworkImage(animal.imageUrl),
+                            height:
+                                sizeConfig.getProportionateScreenHeight(220),
+                            fit: BoxFit.fitHeight,
+                            width: deviceWidth * 0.4,
+                          )
+                        : Image(
+                            image:
+                                AssetImage('assets/images/adopt_me_logo.png'),
+                            height:
+                                sizeConfig.getProportionateScreenHeight(220),
+                            fit: BoxFit.fitHeight,
+                            width: deviceWidth * 0.4,
+                          ),
                   ),
                 ],
                 alignment: Alignment.center,

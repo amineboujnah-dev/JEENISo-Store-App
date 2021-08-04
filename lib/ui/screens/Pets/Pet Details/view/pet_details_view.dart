@@ -19,7 +19,7 @@ class _PetDetailsViewState extends State<PetDetailsView> {
   Widget build(BuildContext context) {
     return StreamProvider<UserData>.value(
       value: UserService(uid: widget.animal.userID).userData,
-      initialData: UserData("", "", "", "", ""),
+      initialData: UserData("", "", "", "", "", ""),
       child: PetDetailsWidget(animal: widget.animal),
     );
   }

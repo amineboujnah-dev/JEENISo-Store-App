@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pets_app/core/models/user_model.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
+import 'package:pets_app/ui/screens/Home/view/home_view.dart';
 import 'package:pets_app/ui/screens/menu/widgets/menu_list_item.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,7 @@ class _MenuListWidgetState extends State<MenuListWidget> {
   @override
   Widget build(BuildContext context) {
     final loginProvider = Provider.of<AuthProvider>(context);
+    final userDataProvider = Provider.of<UserData>(context);
     final sizeConfig = SizeConfig();
     sizeConfig.init(context);
     return Scaffold(
@@ -45,7 +48,7 @@ class _MenuListWidgetState extends State<MenuListWidget> {
                       CircleAvatar(
                         radius: 24.0,
                         backgroundImage:
-                            AssetImage('assets/images/adopt_me_logo.png'),
+                            NetworkImage(userDataProvider.imageUrl),
                       ),
                       SizedBox(
                         width: 16.0,
@@ -54,7 +57,7 @@ class _MenuListWidgetState extends State<MenuListWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'User User',
+                            userDataProvider.name,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -62,7 +65,7 @@ class _MenuListWidgetState extends State<MenuListWidget> {
                             ),
                           ),
                           Text(
-                            'Active status',
+                            userDataProvider.email,
                             style:
                                 TextStyle(color: Colors.white.withOpacity(0.5)),
                           ),
@@ -85,24 +88,30 @@ class _MenuListWidgetState extends State<MenuListWidget> {
                   child: Row(
                     children: <Widget>[
                       Icon(
-                        FontAwesomeIcons.cog,
+                        FontAwesomeIcons.signOutAlt,
                         color: Colors.white.withOpacity(0.5),
                       ),
                       SizedBox(
                         width: 16.0,
                       ),
-                      Text(
+                      /*Text(
                         'Settings',
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.5),
                           fontSize: 20.0,
                           fontWeight: FontWeight.w600,
                         ),
-                      ),
+                      ),*/
                       GestureDetector(
-                        onTap: () async => await loginProvider.logout(context),
+                        onTap: () async {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) {
+                            loginProvider.logout();
+                            return HomeView();
+                          }));
+                        },
                         child: Text(
-                          '   |   Log out',
+                          'Log out',
                           style: TextStyle(
                             color: Colors.white.withOpacity(0.5),
                             fontSize: 20.0,

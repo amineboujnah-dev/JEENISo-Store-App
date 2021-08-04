@@ -1,8 +1,10 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_app/core/constants/login_and_register_constants.dart';
 import 'package:pets_app/core/providers/authentication_provider.dart';
 import 'package:pets_app/ui/screens/Authentication/widgets/login_widget.dart';
+import 'package:pets_app/ui/screens/menu/view/menu_view.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:pets_app/ui/ui_utils/values/styles.dart';
 import 'package:provider/provider.dart';
@@ -200,9 +202,14 @@ class _LoginState extends State<Register> {
                       if (_formKey.currentState!.validate()) {
                         print("Email : ${_emailController.text}");
                         print("Password : ${_passwordController.text}");
-                        await loginProvider.register(
-                            _emailController.text.trim(),
-                            _passwordController.text.trim());
+                        final User? registerResponse =
+                            await loginProvider.register(
+                                _emailController.text.trim(),
+                                _passwordController.text.trim());
+                        if (registerResponse != null) {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => MenuView()));
+                        }
                       }
                     },
                     height: p.getProportionateScreenHeight(70),

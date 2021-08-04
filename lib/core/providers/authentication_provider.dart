@@ -1,12 +1,9 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/widgets.dart';
 import 'package:pets_app/core/models/user_model.dart';
-import 'package:pets_app/ui/screens/Authentication/widgets/login_widget.dart';
 
 class AuthProvider with ChangeNotifier {
   bool _isLoading = false;
@@ -78,11 +75,8 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future logout(BuildContext context) async {
+  Future logout() async {
     await firebaseAuth.signOut();
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => Login(),
-    ));
   }
 
   void setLoading(val) {
