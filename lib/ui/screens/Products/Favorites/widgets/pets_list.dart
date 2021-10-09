@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pets_app/core/constants/drawer_configuration.dart';
-import 'package:pets_app/core/models/animal_model.dart';
+import 'package:pets_app/core/models/product_model.dart';
 import 'package:pets_app/ui/screens/menu/widgets/menu_icon_widget.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,7 @@ class AnimalList extends StatefulWidget {
 class _BrewListState extends State<AnimalList> {
   @override
   Widget build(BuildContext context) {
-    final animals = Provider.of<List<Animal>>(context);
+    final products = Provider.of<List<Product>>(context);
     final sizeConfig = SizeConfig();
     sizeConfig.init(context);
 
@@ -72,9 +72,9 @@ class _BrewListState extends State<AnimalList> {
           ListView.builder(
             physics: ScrollPhysics(),
             shrinkWrap: true,
-            itemCount: animals.length,
+            itemCount: products.length,
             itemBuilder: (context, index) {
-              return AnimalCard(animal: animals[index]);
+              return AnimalCard(product: products[index]);
             },
           ),
         ],

@@ -30,8 +30,8 @@ class _MenuListWidgetState extends State<MenuListWidget> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-              Color.fromRGBO(70, 112, 112, 1.0),
-              Color.fromRGBO(48, 96, 96, 1.0)
+              Color.fromRGBO(58, 57, 57, 1.0),
+              Color.fromRGBO(113, 180, 226, 1.0)
             ])),
         child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
@@ -84,7 +84,7 @@ class _MenuListWidgetState extends State<MenuListWidget> {
                   padding: EdgeInsets.only(
                       bottom: sizeConfig.getProportionateScreenWidth(20),
                       left: sizeConfig.getProportionateScreenWidth(20),
-                      top: sizeConfig.screenHeight * 0.12),
+                      top: sizeConfig.screenHeight * 0.35),
                   child: Row(
                     children: <Widget>[
                       Icon(

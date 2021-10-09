@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:pets_app/core/models/animal_model.dart';
+import 'package:pets_app/core/models/product_model.dart';
 import 'package:pets_app/core/models/user_model.dart';
-import 'package:pets_app/ui/screens/Pets/Pet%20Details/view/pet_details_view.dart';
+import 'package:pets_app/ui/screens/Products/Pet%20Details/view/pet_details_view.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 import 'package:provider/provider.dart';
 
 class AnimalCard extends StatelessWidget {
-  final Animal animal;
-  AnimalCard({required this.animal});
+  final Product product;
+  AnimalCard({required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +16,15 @@ class AnimalCard extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
     final sizeConfig = SizeConfig();
     sizeConfig.init(context);
-    if (animal.myFavorites!.contains(animal.id) &&
-        animal.myFavorites!.contains(user!.id)) {
+    if (product.myFavorites!.contains(product.id) &&
+        product.myFavorites!.contains(user!.id)) {
       return GestureDetector(
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => PetDetailsView(
-                        animal: animal,
+                        product: product,
                       )));
         },
         child: Padding(
@@ -59,18 +59,12 @@ class AnimalCard extends StatelessWidget {
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
                                 Text(
-                                  animal.name,
+                                  product.name,
                                   style: TextStyle(
                                     fontSize: 26.0,
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                                Icon(
-                                  animal.gender == 'Female'
-                                      ? FontAwesomeIcons.venus
-                                      : FontAwesomeIcons.mars,
-                                  color: Colors.grey,
                                 ),
                               ],
                             ),
@@ -79,7 +73,7 @@ class AnimalCard extends StatelessWidget {
                                   sizeConfig.getProportionateScreenHeight(10),
                             ),
                             Text(
-                              animal.type,
+                              product.price,
                               style: TextStyle(
                                 fontSize: 16.0,
                                 color: Theme.of(context).primaryColor,
@@ -89,13 +83,6 @@ class AnimalCard extends StatelessWidget {
                             SizedBox(
                               height:
                                   sizeConfig.getProportionateScreenHeight(10),
-                            ),
-                            Text(
-                              '${animal.age} years old',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600,
-                              ),
                             ),
                             SizedBox(
                               height:
@@ -113,7 +100,7 @@ class AnimalCard extends StatelessWidget {
                                       sizeConfig.getProportionateScreenWidth(6),
                                 ),
                                 Text(
-                                  animal.date.toString(),
+                                  product.date.toString(),
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     color: Theme.of(context).primaryColor,
@@ -140,24 +127,13 @@ class AnimalCard extends StatelessWidget {
                     width: deviceWidth * 0.4,
                   ),
                   Hero(
-                    tag: animal.name,
-                    child: animal.imageUrl != ""
-                        ? Image(
-                            image: NetworkImage(animal.imageUrl),
-                            height:
-                                sizeConfig.getProportionateScreenHeight(220),
-                            fit: BoxFit.fitHeight,
-                            width: deviceWidth * 0.4,
-                          )
-                        : Image(
-                            image:
-                                AssetImage('assets/images/adopt_me_logo.png'),
-                            height:
-                                sizeConfig.getProportionateScreenHeight(220),
-                            fit: BoxFit.fitHeight,
-                            width: deviceWidth * 0.4,
-                          ),
-                  ),
+                      tag: product.name,
+                      child: Image(
+                        image: NetworkImage(product.imageUrl),
+                        height: sizeConfig.getProportionateScreenHeight(220),
+                        fit: BoxFit.fitHeight,
+                        width: deviceWidth * 0.4,
+                      )),
                 ],
                 alignment: Alignment.center,
               )

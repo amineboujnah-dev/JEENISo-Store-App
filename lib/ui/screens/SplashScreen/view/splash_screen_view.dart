@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:pets_app/core/constants/drawer_configuration.dart';
-import 'package:pets_app/ui/screens/Authentication/view/authentication_view.dart';
 import 'package:pets_app/ui/screens/Home/view/home_view.dart';
 import 'package:pets_app/ui/ui_utils/config_setup/size_config.dart';
 
@@ -15,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 4), () {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (_) => HomeView()));
     });
@@ -26,13 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
     final p = new SizeConfig();
     p.init(context);
     return Scaffold(
-      backgroundColor: primaryGreen,
+      //backgroundColor: primaryGreen,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/images/adopt_me_logo.png",
+              "assets/images/junior.png",
               height: p.getProportionateScreenHeight(300),
             ),
             SizedBox(

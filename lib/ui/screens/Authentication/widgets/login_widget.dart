@@ -191,44 +191,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),*/
-                  SizedBox(height: p.getProportionateScreenHeight(20)),
-                  Text(
-                    '- OR -',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  SizedBox(height: p.getProportionateScreenHeight(10)),
-                  Text(
-                    'Sign in with',
-                    style: authMsgslStyle,
-                  ),
-                  SizedBox(height: p.getProportionateScreenHeight(20)),
-                  GestureDetector(
-                    onTap: () {
-                      loginWithGoogleProvider.googleLogin();
-                    },
-                    child: Container(
-                      height: p.getProportionateScreenHeight(60),
-                      width: p.getProportionateScreenWidth(45),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).primaryColor,
-                            offset: Offset(0, 2),
-                            blurRadius: 6.0,
-                          ),
-                        ],
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'assets/images/google.jpg',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+
                   SizedBox(height: p.getProportionateScreenHeight(20)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

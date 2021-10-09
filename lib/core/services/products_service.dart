@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:pets_app/core/models/animal_model.dart';
+import 'package:pets_app/core/models/product_model.dart';
 import 'package:pets_app/core/models/user_model.dart';
 
 class PetsService with ChangeNotifier {
@@ -12,8 +12,8 @@ class PetsService with ChangeNotifier {
   CollectionReference allpetsCollection =
       FirebaseFirestore.instance.collection("all pets");
 
-  Future<Animal> addPet(String userID, String name, String age, String gender,
-      String type, String imageUrl, String description) async {
+  Future<Product> addProduct(String userID, String name, String age,
+      String gender, String type, String imageUrl, String description) async {
     try {
       if (currentUser != null) {
         final docRef1 =
@@ -47,14 +47,11 @@ class PetsService with ChangeNotifier {
     } on FirebaseException catch (e) {
       print(e.message);
     }
-    return Animal(
+    return Product(
       userID: userID,
       name: name,
-      type: type,
-      age: age,
-      gender: gender,
+      price: type,
       imageUrl: imageUrl,
-      description: description,
     );
   }
 
@@ -71,27 +68,24 @@ class PetsService with ChangeNotifier {
     }
   }
 
-  List<Animal> _animalListFromSnapshot(QuerySnapshot snapshot) {
+  List<Product> _animalListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
-      return Animal(
+      return Product(
           id: doc['id'],
           userID: doc['userID'],
           name: doc['name'],
-          type: doc['type'],
-          age: doc['age'],
-          description: doc['description'],
-          gender: doc['gender'],
+          price: doc['type'],
           imageUrl: doc['imageUrl'],
           date: doc['date'],
           myFavorites: doc['myFavorites']);
     }).toList();
   }
 
-  Stream<List<Animal>> get animals {
+  Stream<List<Product>> get products {
     return allpetsCollection.snapshots().map(_animalListFromSnapshot);
   }
 
-  Stream<List<Animal>> get myAnimals {
+  Stream<List<Product>> get myAnimals {
     return petsCollections
         .doc(currentUser!.uid)
         .collection('my_pets')
@@ -110,18 +104,15 @@ class PetsService with ChangeNotifier {
         .catchError((error) => print("Failed to delete pet: $error"));
   }
 
-  Animal _userFromFirebaseUser(DocumentSnapshot snapshot) {
-    return Animal(
+  Product _userFromFirebaseUser(DocumentSnapshot snapshot) {
+    return Product(
         userID: snapshot.get('userID'),
         name: snapshot.get('name'),
-        type: snapshot.get('type'),
-        age: snapshot.get('age'),
-        description: snapshot.get('description'),
-        gender: snapshot.get('gender'),
+        price: snapshot.get('type'),
         imageUrl: snapshot.get('imageUrl'));
   }
 
-  Stream<Animal> getAnimal(String userID, String? docID) {
+  Stream<Product> getAnimal(String userID, String? docID) {
     return petsCollections
         .doc(userID)
         .collection('my_pets')
@@ -130,7 +121,7 @@ class PetsService with ChangeNotifier {
         .map(_userFromFirebaseUser);
   }
 
-  Future<Animal> updatePetData(
+  Future<Product> updatePetData(
       String userID,
       String? id,
       String name,
@@ -157,14 +148,11 @@ class PetsService with ChangeNotifier {
       "description": description,
       "date": DateFormat.yMMMMd("en_US").format(DateTime.now()),
     });*/
-    return Animal(
+    return Product(
       userID: userID,
       name: name,
-      type: type,
-      age: age,
-      gender: gender,
+      price: type,
       imageUrl: imageUrl,
-      description: description,
     );
   }
 }

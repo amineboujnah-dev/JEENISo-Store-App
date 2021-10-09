@@ -2,38 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pets_app/ui/screens/menu/data/menu_item_model.dart';
 
-Color primaryGreen = Color(0xff416d6d);
+Color primaryGreen = Color.fromRGBO(53, 148, 214, 1);
 List<BoxShadow> shadowList = [
   BoxShadow(color: (Colors.grey[300])!, blurRadius: 30, offset: Offset(0, 10))
-];
-
-List<Map> categories = [
-  {'name': 'Cats', 'iconPath': 'assets/images/cat.png'},
-  {'name': 'Dogs', 'iconPath': 'assets/images/dog.png'},
-  {'name': 'Bunnies', 'iconPath': 'assets/images/rabbit.png'},
-  {'name': 'Parrots', 'iconPath': 'assets/images/parrot.png'},
-  {'name': 'Horses', 'iconPath': 'assets/images/horse.png'}
 ];
 
 const List<MenuItemModel> menuItemsList = [
   MenuItemModel(
       menuItemIndex: 0,
-      menuItemTitle: "Adoption",
-      menuItemIcon: FontAwesomeIcons.paw),
-  MenuItemModel(
-      menuItemIndex: 1,
-      menuItemTitle: "My pets",
+      menuItemTitle: "Home",
       menuItemIcon: FontAwesomeIcons.home),
   MenuItemModel(
-      menuItemIndex: 2,
-      menuItemTitle: "Add pet",
-      menuItemIcon: FontAwesomeIcons.plus),
-  MenuItemModel(
-      menuItemIndex: 3,
+      menuItemIndex: 1,
       menuItemTitle: "Favorites",
       menuItemIcon: FontAwesomeIcons.solidHeart),
   MenuItemModel(
-      menuItemIndex: 4,
+      menuItemIndex: 2,
       menuItemTitle: "Profile",
       menuItemIcon: FontAwesomeIcons.userAlt),
 ];
