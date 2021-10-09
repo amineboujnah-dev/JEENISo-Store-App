@@ -1,4 +1,4 @@
-# pets_app
+# jeeniso_app
 
 A new Flutter project.
 
